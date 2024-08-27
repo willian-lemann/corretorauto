@@ -39,9 +39,15 @@ const getListings = cache(
     }
 
     if (query) {
-      queryRaw = queryRaw.textSearch("address", query, {
-        type: "websearch",
-      });
+      const isQuerySearch = isNaN(Number(query));
+
+      if (!isQuerySearch) {
+        queryRaw = queryRaw.or(`ref.eq.${query}, id.eq.${query}`);
+      } else {
+        queryRaw = queryRaw.textSearch("address", query, {
+          type: "websearch",
+        });
+      }
     }
 
     return await queryRaw;
