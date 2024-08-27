@@ -6,7 +6,7 @@ import { Suspense } from "react";
 import { Skeleton } from "./listings/skeleton";
 
 type HomePageProps = {
-  searchParams: { page: number; search: string; filter: string; type: string };
+  searchParams: { page: number; q: string; filter: string; type: string };
 };
 
 export default function HomePage({ searchParams }: HomePageProps) {

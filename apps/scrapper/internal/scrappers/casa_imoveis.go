@@ -48,7 +48,7 @@ func scrapeInitPage() []structs.ListingItem {
 			bedrooms := 0
 			bathrooms := 0
 			parking := 0
-			forSale := h.Attr("data-categoria") == "aluguel"
+			forSale := h.Attr("data-categoria") == "venda"
 			ref := h.ChildText("div.destaquecard__img div.row--1 p")
 
 			h.ForEach("div.destaquecard__img div.row--1 div.destaquecard__img__features", func(i int, h *colly.HTMLElement) {

@@ -15,45 +15,45 @@ const getListingsLimited = cache(async () => {
 
 type GetListingParams = {
   page: number;
-  search: string;
+  query: string;
   filter: string;
   type: string;
 };
 
 const getListings = cache(
-  async ({ filter, page, search, type }: GetListingParams) => {
+  async ({ filter, page, query, type }: GetListingParams) => {
     const offset = (+page - 1) * pageSize;
 
-    let query = supabaseDB
+    let queryRaw = supabaseDB
       .from("listings")
       .select("*", { count: "exact" })
       .range(offset, offset + pageSize - 1);
 
     if (type) {
       const newType = type === "Apartamento" ? "Residencial" : type;
-      query = query.or(`type.ilike.${newType}`);
+      queryRaw = queryRaw.or(`type.ilike.${newType}`);
     }
 
     if (filter) {
-      query = query.or(`forSale.eq.${filter !== "Aluguel"}`);
+      queryRaw = queryRaw.or(`forSale.eq.${filter !== "Aluguel"}`);
     }
 
-    if (search) {
-      return await query.textSearch("address", search, {
+    if (query) {
+      queryRaw = queryRaw.textSearch("address", query, {
         type: "websearch",
       });
     }
 
-    return await query;
+    return await queryRaw;
   }
 );
 
 type ListingsProps = {
-  searchParams: { page: number; search: string; filter: string; type: string };
+  searchParams: { page: number; q: string; filter: string; type: string };
 };
 
 export async function Listings({
-  searchParams: { page = 1, search = "", ...filters },
+  searchParams: { page = 1, q = "", ...filters },
 }: ListingsProps) {
   const { userId } = auth();
   const isLogged = !!userId;
@@ -61,7 +61,7 @@ export async function Listings({
   const { filter, type } = filters;
 
   const { data, count: listingCount } = isLogged
-    ? await getListings({ page: +page, filter, search, type })
+    ? await getListings({ page: +page, filter, query: q, type })
     : await getListingsLimited();
 
   const numberOfPages = Math.ceil(Number(listingCount) / pageSize);

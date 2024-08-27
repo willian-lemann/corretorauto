@@ -70,7 +70,7 @@ export async function ListingItem({ listing, isLogged }: ListingItemProps) {
             {listing.bathrooms} Banheiro(s)
           </div>
           <div className="flex items-center justify-between">
-            <div className="text-2xl font-bold">R$ {listing.price}</div>
+            <div className="text-2xl font-bold">{listing.price}</div>
             {/* <Button
               variant="ghost"
               size="icon"
