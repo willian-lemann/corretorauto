@@ -52,7 +52,8 @@ func initScrape(visitLink string) []structs.ListingItem {
 			link := fmt.Sprintf("https://www.auxiliadorapredial.com.br/imovel/venda/%s", ref)
 			id, _ := strconv.Atoi(ref)
 			address := h.ChildText("div.Location span")
-			price := h.ChildText("div.content div.headContent div.total div div.oldValue")
+			priceValue := strings.Trim(h.ChildText("div.content div.headContent div.total div div.oldValue"), " ")
+			price := strings.Replace(priceValue, "R$", "", -1)
 			listingType := h.ChildText("div.content div.headContent h4")
 			bedrooms := 0
 			bathrooms := 0

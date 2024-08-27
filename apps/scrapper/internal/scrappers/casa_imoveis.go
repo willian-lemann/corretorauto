@@ -43,7 +43,8 @@ func scrapeInitPage() []structs.ListingItem {
 			id, _ := strconv.Atoi(utils.GetIDFromLink(link))
 			image := h.ChildAttr("div.destaquecard__img img", "data-src")
 			address := h.ChildText("div.destaquecard__img div.row--2 div.destaquecard__image__text p.destaquecard__image__local")
-			price := h.ChildText("div.destaquecard__img div.row--2 div.destaquecard__image__text p.destaquecard__image__valor")
+			priceValue := strings.Trim(h.ChildText("div.destaquecard__img div.row--2 div.destaquecard__image__text p.destaquecard__image__valor"), " ")
+			price := strings.Replace(priceValue, "R$", "", -1)
 			listingType := h.ChildText("div.destaquecard__img div.row--2 div.destaquecard__image__text h2.destaquecard__image__name")
 			bedrooms := 0
 			bathrooms := 0
