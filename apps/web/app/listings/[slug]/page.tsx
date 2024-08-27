@@ -97,7 +97,7 @@ export default async function ListingDetails({ params }: ListingDetailsProps) {
           <div>
             <h2 className="text-2xl md:text-3xl font-bold">Galeria</h2>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-4">
-              {listing?.photos?.map((photo) => (
+              {listing?.photos?.map((photo: any) => (
                 <img
                   key={photo.href}
                   src={photo.href}
