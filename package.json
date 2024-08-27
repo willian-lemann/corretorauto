@@ -1,5 +1,5 @@
 {
-  "name": "agent-real-estate",
+  "name": "imovel-facil",
   "private": true,
   "scripts": {
     "build": "turbo build",
