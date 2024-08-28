@@ -1,5 +1,3 @@
-import { supabaseDB } from "@/lib/supabase";
-
 import { Button } from "@/components/ui/button";
 import { BathIcon, BedIcon, LocateIcon, RulerIcon } from "lucide-react";
 import Image from "next/image";
@@ -12,19 +10,10 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { Header } from "@/components/header";
-import { Metadata, ResolvingMetadata } from "next";
-import { createSlug } from "@/lib/utils";
 
-function extractIdFromSlug(url: string) {
-  const parts = url.split("/");
-  const slug = parts[parts.length - 1];
-  if (!slug) {
-    return null;
-  }
-  const id = slug.split("-")[0];
-  return id;
-}
+import { Metadata, ResolvingMetadata } from "next";
+import { createSlug, extractIdFromSlug } from "@/lib/utils";
+import { getListing } from "@/data-access/get-listing";
 
 type ListingDetailsProps = {
   params: {
@@ -37,13 +26,8 @@ export async function generateMetadata(
   parent: ResolvingMetadata
 ): Promise<Metadata> {
   const id = extractIdFromSlug(params.slug);
+  const listing = await getListing(id);
 
-  const { data: listing } = await supabaseDB
-    .from("listings")
-    .select("*")
-    .filter("id", "eq", id)
-    .single();
-  // optionally access and extend (rather than replace) parent metadata
   const previousImages = (await parent).openGraph?.images || [];
 
   return {
@@ -55,11 +39,7 @@ export async function generateMetadata(
 }
 export default async function ListingDetails({ params }: ListingDetailsProps) {
   const id = extractIdFromSlug(params.slug);
-  const { data: listing } = await supabaseDB
-    .from("listings")
-    .select("*")
-    .filter("id", "eq", id)
-    .single();
+  const listing = await getListing(id!);
 
   return (
     <>

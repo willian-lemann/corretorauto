@@ -39,15 +39,15 @@ export function ListingPagination({ page, numberOfPages }: ListingsProps) {
     }
   }
 
-  const limit = 10;
+  const limit = 5;
   const startPage = Math.max(1, page - Math.floor(limit / 2));
   const endPage = Math.min(startPage + limit - 1, numberOfPages);
 
   return (
-    <Pagination className="py-10">
+    <Pagination className="py-10  md:block">
       <PaginationContent>
         {startPage >= 10 ? (
-          <PaginationItem>
+          <PaginationItem className="hidden md:block">
             <PaginationLink
               variant="ghost"
               className="px-10"
@@ -58,9 +58,11 @@ export function ListingPagination({ page, numberOfPages }: ListingsProps) {
             </PaginationLink>
           </PaginationItem>
         ) : null}
-        <PaginationItem>
+
+        <PaginationItem className="px-3 md:px-0">
           <PaginationPrevious variant="ghost" onClick={handleGoPrev} />
         </PaginationItem>
+
         {Array.from({
           length: endPage - startPage + 1,
         }).map((_, index) => (
@@ -74,15 +76,18 @@ export function ListingPagination({ page, numberOfPages }: ListingsProps) {
             </PaginationLink>
           </PaginationItem>
         ))}
+
         {endPage < numberOfPages && (
-          <PaginationItem>
+          <PaginationItem className="hidden md:block">
             <PaginationEllipsis />
           </PaginationItem>
         )}
-        <PaginationItem>
+
+        <PaginationItem className="px-3 md:px-0">
           <PaginationNext variant="ghost" onClick={handleGoNext} />
         </PaginationItem>
-        <PaginationItem>
+
+        <PaginationItem className="hidden md:block">
           <PaginationLink
             className="px-10"
             variant="ghost"

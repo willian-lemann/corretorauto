@@ -22,3 +22,13 @@ export function createSlug(propertyName: string) {
     .replace(/\s+/g, "-")
     .replace(/-+/g, "-");
 }
+
+export function extractIdFromSlug(url: string) {
+  const parts = url.split("/");
+  const slug = parts[parts.length - 1];
+  if (!slug) {
+    return 0;
+  }
+  const id = slug.split("-")[0]!;
+  return +id;
+}

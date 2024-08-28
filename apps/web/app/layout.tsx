@@ -27,12 +27,11 @@ type LayoutProps = {
 
 export const metadata: Metadata = {
   title: {
-    template: "%s - Imóvel Facil",
-    default:
-      "Imóvel Facil - facilidade em encontrar seu imóvel, mais de 300 imóveis disponíveis",
+    template: "%s - Imóvel Fácil",
+    default: "Encontre facilmente seu imóvel dos sonhos",
   },
   description:
-    "Imóvel Facil - facilidade em encontrar seu imóvel, mais de 300 imóveis disponíveis",
+    "Imóvel Fácil é um site imobiliário brasileiro que oferece uma ampla variedade de imóveis, incluindo casas, apartamentos e residências. Com mais de 300 listagens disponíveis, encontrar o imóvel perfeito nunca foi tão fácil. Navegue pelo site, filtre ou pesquise na barra de busca para encontrar exatamente o que você procura. Oferecemos uma experiência de usuário e interface de usuário elegantes e modernas para tornar a busca por imóveis uma experiência agradável. Não perca tempo com sites imobiliários desatualizados, escolha o Imóvel Fácil para encontrar seu novo lar hoje mesmo!",
 };
 
 export default async function Layout({ children }: LayoutProps) {

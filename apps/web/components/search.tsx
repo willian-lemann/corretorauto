@@ -74,7 +74,7 @@ export function Search() {
   }
 
   return (
-    <div className="flex items-center justify-end container w-full gap-2 bg-background rounded-lg ">
+    <div className="flex md:flex-row flex-col md:items-center justify-end container w-full gap-2 bg-background rounded-lg ">
       <div className="relative flex-1 max-w-lg">
         <SearchIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
         <Input
@@ -96,54 +96,56 @@ export function Search() {
         Procurar
       </Button>
 
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="outline" size="default" className="gap-1">
-            <ListFilterIcon className="h-3.5 w-3.5" />
-            <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-              {params.get("filter") || "Filtrar por"}
-            </span>
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="">
-          <DropdownMenuLabel>Filtrar por</DropdownMenuLabel>
-          <DropdownMenuSeparator />
+      <div className="">
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" size="default" className="gap-1">
+              <ListFilterIcon className="h-3.5 w-3.5" />
+              <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+                {params.get("filter") || "Filtrar por"}
+              </span>
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="">
+            <DropdownMenuLabel>Filtrar por</DropdownMenuLabel>
+            <DropdownMenuSeparator />
 
-          {filters.map((filter) => (
-            <DropdownMenuCheckboxItem
-              checked={params.get("filter") === filter.value}
-              key={filter.value}
-              onClick={() => handleFilter(filter.value)}
-            >
-              {filter.label}
-            </DropdownMenuCheckboxItem>
-          ))}
-        </DropdownMenuContent>
-      </DropdownMenu>
+            {filters.map((filter) => (
+              <DropdownMenuCheckboxItem
+                checked={params.get("filter") === filter.value}
+                key={filter.value}
+                onClick={() => handleFilter(filter.value)}
+              >
+                {filter.label}
+              </DropdownMenuCheckboxItem>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
 
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="outline" size="default" className="gap-1">
-            <ListFilterIcon className="h-3.5 w-3.5" />
-            <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-              {params.get("type") || "Tipo de imóvel"}
-            </span>
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
-          <DropdownMenuLabel> Tipo de imóvel</DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          {types.map((type) => (
-            <DropdownMenuCheckboxItem
-              key={type.value}
-              checked={params.get("type") === type.value}
-              onClick={() => handleType(type.value)}
-            >
-              {type.label}
-            </DropdownMenuCheckboxItem>
-          ))}
-        </DropdownMenuContent>
-      </DropdownMenu>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" size="default" className="gap-1">
+              <ListFilterIcon className="h-3.5 w-3.5" />
+              <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+                {params.get("type") || "Tipo de imóvel"}
+              </span>
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuLabel> Tipo de imóvel</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            {types.map((type) => (
+              <DropdownMenuCheckboxItem
+                key={type.value}
+                checked={params.get("type") === type.value}
+                onClick={() => handleType(type.value)}
+              >
+                {type.label}
+              </DropdownMenuCheckboxItem>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
 
       {hasFilters ? (
         <Button
