@@ -2,7 +2,6 @@ import { getUser } from "@/data-access/get-user";
 import { supabaseDB } from "@/lib/supabase";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
-import React, { PropsWithChildren } from "react";
 
 async function saveUserToDatabase(userId: string) {
   const response = await supabaseDB
@@ -16,9 +15,7 @@ async function getUserFromDatabase(userId: string) {
   return user;
 }
 
-export default async function CallbackAuthPage({
-  children,
-}: PropsWithChildren) {
+export default async function CallbackAuthPage() {
   const { userId } = auth();
 
   if (userId) {
@@ -33,5 +30,5 @@ export default async function CallbackAuthPage({
     redirect("/");
   }
 
-  return <>{children}</>;
+  return null;
 }
