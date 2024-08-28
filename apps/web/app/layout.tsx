@@ -22,14 +22,13 @@ type LayoutProps = {
   login: React.ReactNode & { props: { parallelRouterKey: string } };
 };
 
-export default async function Layout({ login, children }: LayoutProps) {
+export default async function Layout({ children }: LayoutProps) {
   return (
     <ClerkProvider localization={ptBR}>
       <html lang="pt-BR">
         <body
           className={cn("antialiased", fontHeading.variable, fontBody.variable)}
         >
-          {login}
           {children}
         </body>
       </html>

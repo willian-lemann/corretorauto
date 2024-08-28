@@ -4,6 +4,7 @@ import Link from "next/link";
 import { BathIcon, BedIcon } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { Card } from "@/components/ui/card";
+import { login } from "../utils/redirects";
 
 type ListingItemProps = {
   isLogged: boolean;
@@ -35,7 +36,7 @@ export async function ListingItem({ listing, isLogged }: ListingItemProps) {
   function getListingURL(listingItem: any) {
     return isLogged
       ? `/listings/${listingItem.id}-${createSlug(listingItem.address)}`
-      : `/login`;
+      : login;
   }
 
   return (

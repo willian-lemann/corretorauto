@@ -5,7 +5,6 @@ import { supabaseDB } from "@/lib/supabase";
 import { auth } from "@clerk/nextjs/server";
 import axios from "axios";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 
 type CheckAgentResponse = {
   cadastros: Array<{
@@ -61,6 +60,20 @@ export async function checkAgent(prevState: any, formData: FormData) {
     if (!agent) {
       return {
         error: "Nenhum registro encontrado com esse CRECI",
+        success: false,
+      };
+    }
+
+    const foundAgentWithAgentId = await supabaseDB
+      .from("agents")
+      .select("id, agentId")
+      .filter("agentId", "eq", agent.creci)
+      .single();
+
+    if (foundAgentWithAgentId) {
+      return {
+        error:
+          "Não é possível se cadastrar como corretor com o mesmo CRECI de outro corretor",
         success: false,
       };
     }

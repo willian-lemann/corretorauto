@@ -4,9 +4,17 @@ import { Search } from "@/components/search";
 import { auth } from "@clerk/nextjs/server";
 import { Suspense } from "react";
 import { Skeleton } from "./listings/skeleton";
+import { LoginModal } from "@/components/login-modal";
+import { SignIn } from "@/components/sign-in";
 
 type HomePageProps = {
-  searchParams: { page: number; q: string; filter: string; type: string };
+  searchParams: {
+    page: number;
+    q: string;
+    filter: string;
+    type: string;
+    show_login: string;
+  };
 };
 
 export default function HomePage({ searchParams }: HomePageProps) {
@@ -26,6 +34,9 @@ export default function HomePage({ searchParams }: HomePageProps) {
           </div>
         </div>
       </div>
+      <LoginModal>
+        <SignIn />
+      </LoginModal>
     </>
   );
 }

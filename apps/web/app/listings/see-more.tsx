@@ -2,12 +2,13 @@
 
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import { login } from "../utils/redirects";
 
 export function SeeMore() {
   const router = useRouter();
 
   function seeMore() {
-    router.push("/login");
+    router.push(login);
   }
 
   return (

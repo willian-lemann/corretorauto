@@ -5,6 +5,7 @@ import { AgentModal } from "./agent-modal";
 import { Button } from "./ui/button";
 import { auth } from "@clerk/nextjs/server";
 import { getUser } from "@/data-access/get-user";
+import { login } from "@/app/utils/redirects";
 
 export async function Header() {
   const { userId: isAuthenticated } = auth();
@@ -45,7 +46,7 @@ export async function Header() {
             <UserButton />
           ) : (
             <Link
-              href="/login"
+              href={login}
               className="text-sm font-medium hover:underline"
               prefetch={false}
             >
