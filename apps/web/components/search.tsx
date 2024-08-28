@@ -51,6 +51,7 @@ export function Search() {
     } else {
       params.delete("filter");
     }
+    params.delete("page");
     replace(`${pathname}?${params.toString()}`);
   }
 
@@ -60,6 +61,7 @@ export function Search() {
     } else {
       params.delete("type");
     }
+    params.delete("page");
     replace(`${pathname}?${params.toString()}`);
   }
 
