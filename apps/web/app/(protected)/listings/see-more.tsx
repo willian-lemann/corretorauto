@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import { login } from "../utils/redirects";
+import { login } from "@/app/utils/redirects";
 
 export function SeeMore() {
   const router = useRouter();

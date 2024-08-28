@@ -1,5 +1,5 @@
-import { Listings } from "@/app/listings/listings";
-import { Header } from "@/components/header";
+import { Listings } from "@/app/(protected)/listings/listings";
+
 import { Search } from "@/components/search";
 import { auth } from "@clerk/nextjs/server";
 import { Suspense } from "react";
@@ -22,7 +22,6 @@ export default function HomePage({ searchParams }: HomePageProps) {
 
   return (
     <>
-      <Header />
       <div className="flex flex-col md:flex-row">
         <div className="container p-0">
           <div className="py-4">{isLogged ? <Search /> : null}</div>

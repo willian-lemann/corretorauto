@@ -4,7 +4,8 @@ import Link from "next/link";
 import { BathIcon, BedIcon } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { Card } from "@/components/ui/card";
-import { login } from "../utils/redirects";
+import { login } from "@/app/utils/redirects";
+import { createSlug } from "@/lib/utils";
 
 type ListingItemProps = {
   isLogged: boolean;
@@ -24,15 +25,6 @@ type ListingItemProps = {
 };
 
 export async function ListingItem({ listing, isLogged }: ListingItemProps) {
-  function createSlug(propertyName: string) {
-    return propertyName
-      .toLowerCase()
-      .trim()
-      .replace(/[^a-z0-9\s-]/g, "")
-      .replace(/\s+/g, "-")
-      .replace(/-+/g, "-");
-  }
-
   function getListingURL(listingItem: any) {
     return isLogged
       ? `/listings/${listingItem.id}-${createSlug(listingItem.address)}`

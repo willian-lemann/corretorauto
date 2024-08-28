@@ -13,3 +13,12 @@ export function formatMoney(money?: number) {
 
   return formatter.format(Number(money));
 }
+
+export function createSlug(propertyName: string) {
+  return propertyName
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9\s-]/g, "")
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-");
+}

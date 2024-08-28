@@ -1,10 +1,12 @@
+import "@/app/globals.css";
+
 import { ClerkProvider } from "@clerk/nextjs";
 import { ptBR } from "@clerk/localizations";
 
 import { Inter } from "next/font/google";
 import { cn } from "@/lib/utils";
-import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
+import { Metadata } from "next";
 
 const fontHeading = Inter({
   subsets: ["latin"],
@@ -21,6 +23,16 @@ const fontBody = Inter({
 type LayoutProps = {
   children: React.ReactNode;
   login: React.ReactNode & { props: { parallelRouterKey: string } };
+};
+
+export const metadata: Metadata = {
+  title: {
+    template: "%s - Imóvel Facil",
+    default:
+      "Imóvel Facil - facilidade em encontrar seu imóvel, mais de 300 imóveis disponíveis",
+  },
+  description:
+    "Imóvel Facil - facilidade em encontrar seu imóvel, mais de 300 imóveis disponíveis",
 };
 
 export default async function Layout({ children }: LayoutProps) {
