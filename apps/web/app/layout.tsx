@@ -4,6 +4,7 @@ import { ptBR } from "@clerk/localizations";
 import { Inter } from "next/font/google";
 import { cn } from "@/lib/utils";
 import "./globals.css";
+import { Toaster } from "@/components/ui/toaster";
 
 const fontHeading = Inter({
   subsets: ["latin"],
@@ -30,6 +31,7 @@ export default async function Layout({ children }: LayoutProps) {
           className={cn("antialiased", fontHeading.variable, fontBody.variable)}
         >
           {children}
+          <Toaster />
         </body>
       </html>
     </ClerkProvider>

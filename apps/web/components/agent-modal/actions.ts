@@ -72,8 +72,7 @@ export async function checkAgent(prevState: any, formData: FormData) {
 
     if (foundAgentWithAgentId) {
       return {
-        error:
-          "Não é possível se cadastrar como corretor com o mesmo CRECI de outro corretor",
+        error: "Não é possível logar com um CRECI de outro corretor",
         success: false,
       };
     }

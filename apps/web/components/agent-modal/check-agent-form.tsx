@@ -16,13 +16,23 @@ import { checkAgent } from "./actions";
 import { useFormState } from "react-dom";
 import { Button } from "../ui/button";
 
+import { useToast } from "../ui/use-toast";
+import { useEffect } from "react";
+
 export function CheckAgentForm() {
+  const { toast } = useToast();
   const [state, action, isPending] = useFormState(checkAgent, {
     error: "",
     success: true,
   });
 
   const isLoading = isPending && state?.error.length! > 0;
+
+  useEffect(() => {
+    if (!isPending && state?.error) {
+      toast({ title: state.error, variant: "destructive" });
+    }
+  }, [state?.error, isPending]);
 
   return (
     <DialogContent asChild>
@@ -41,10 +51,6 @@ export function CheckAgentForm() {
         <Input autoFocus id="agent-id" type="number" name="agent-id" />
 
         <DialogFooter className="flex items-center justify-between w-full">
-          <div className="mr-auto">
-            <p className="text-sm text-destructive">{state?.error}</p>
-          </div>
-
           <Button type="submit">{isLoading ? "Logando..." : "Logar"}</Button>
         </DialogFooter>
       </form>
