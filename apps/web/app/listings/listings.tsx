@@ -30,8 +30,7 @@ const getListings = cache(
       .range(offset, offset + pageSize - 1);
 
     if (type) {
-      const newType = type === "Apartamento" ? "Residencial" : type;
-      queryRaw = queryRaw.or(`type.ilike.${newType}`);
+      queryRaw = queryRaw.or(`type.ilike.${type}`);
     }
 
     if (filter) {
