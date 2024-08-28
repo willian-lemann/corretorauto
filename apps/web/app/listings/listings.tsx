@@ -30,7 +30,7 @@ const getListings = cache(
       .range(offset, offset + pageSize - 1);
 
     if (type) {
-      queryRaw = queryRaw.or(`type.ilike.${type}`);
+      queryRaw = queryRaw.eq("type", type);
     }
 
     if (filter) {
