@@ -3,7 +3,7 @@
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { ListFilterIcon, SearchIcon, XIcon } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
   DropdownMenu,
@@ -86,7 +86,8 @@ export function Search() {
           className="w-full py-3 pl-12 pr-4 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
         />
 
-        <div className="flex gap-1 ml-2">
+        {/* mobile filters */}
+        <div className="flex md:hidden gap-1 ml-2">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" size="default" className="gap-1">
@@ -147,7 +148,8 @@ export function Search() {
         Procurar
       </Button>
 
-      <div className="hidden md:block">
+      {/* desktop filters */}
+      <div className="hidden md:flex gap-1">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" size="default" className="gap-1">

@@ -1,7 +1,7 @@
 "use client";
 
 import {
-  Pagination,
+  Pagination as PaginationComponent,
   PaginationContent,
   PaginationEllipsis,
   PaginationItem,
@@ -9,14 +9,20 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+
 import { useSearchParams, useRouter } from "next/navigation";
 
-type ListingsProps = {
+export type ListingPaginationProps = {
   numberOfPages: number;
   page: number;
+  isMobile: boolean;
 };
 
-export function ListingPagination({ page, numberOfPages }: ListingsProps) {
+export function Pagination({
+  page,
+  numberOfPages,
+  isMobile,
+}: ListingPaginationProps) {
   const params = useSearchParams();
   const searchparams = new URLSearchParams(params);
   const router = useRouter();
@@ -38,12 +44,12 @@ export function ListingPagination({ page, numberOfPages }: ListingsProps) {
     }
   }
 
-  const limit = 5;
+  const limit = isMobile ? 5 : 10;
   const startPage = Math.max(1, page - Math.floor(limit / 2));
   const endPage = Math.min(startPage + limit - 1, numberOfPages);
 
   return (
-    <Pagination className="py-10  md:block">
+    <PaginationComponent className="py-10 md:flex">
       <PaginationContent>
         {startPage >= 10 ? (
           <PaginationItem className="hidden md:block">
@@ -97,6 +103,6 @@ export function ListingPagination({ page, numberOfPages }: ListingsProps) {
           </PaginationLink>
         </PaginationItem>
       </PaginationContent>
-    </Pagination>
+    </PaginationComponent>
   );
 }

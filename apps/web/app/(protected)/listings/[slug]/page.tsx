@@ -45,7 +45,7 @@ export default async function ListingDetails({ params }: ListingDetailsProps) {
     <>
       <div className="flex flex-col min-h-dvh">
         <section className="bg-white">
-          <div className="container px-4 md:px-6 py-12 md:py-12">
+          <div className="container px-8 py-12 md:py-12">
             <Breadcrumb className="pb-8">
               <BreadcrumbList>
                 <BreadcrumbItem>

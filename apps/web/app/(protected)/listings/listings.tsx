@@ -2,10 +2,12 @@ import { supabaseDB } from "@/lib/supabase";
 
 import { auth } from "@clerk/nextjs/server";
 import { cache } from "react";
-import { ListingPagination } from "./pagination";
+import { Pagination } from "./pagination";
 import { ListingItem } from "./listing-item";
 import { List } from "lucide-react";
 import { SeeMore } from "./see-more";
+import { userAgent } from "next/server";
+import { headers } from "next/headers";
 
 const pageSize = 12;
 
@@ -61,7 +63,10 @@ export async function Listings({
   searchParams: { page = 1, q = "", ...filters },
 }: ListingsProps) {
   const { userId } = auth();
+  const agent = userAgent({ headers: headers() });
+
   const isLogged = !!userId;
+  const isMobile = agent.device.type === "mobile";
 
   const { filter, type } = filters;
 
@@ -101,7 +106,11 @@ export async function Listings({
       )}
 
       {shouldShowPagination ? (
-        <ListingPagination numberOfPages={numberOfPages} page={page} />
+        <Pagination
+          isMobile={isMobile}
+          numberOfPages={numberOfPages}
+          page={page}
+        />
       ) : null}
 
       {!isLogged ? <SeeMore /> : null}
