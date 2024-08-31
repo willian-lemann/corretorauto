@@ -63,29 +63,10 @@ func (usecase *SaveListingUseCase) Execute() (bool, error) {
 }
 
 func ExecuteOne(listingItem structs.ListingItem) (bool, error) {
-	// savedListings, _ := GetListings()
-
-	// var errorListings []int
-
-	// for _, savedListing := range savedListings {
-	// 	if savedListing.Id == listingItem.Id {
-	// 		continue
-	// 	}
-	// 	_, err := repositories.SaveOne(listingItem)
-	// 	if err != nil {
-	// 		fmt.Println("Cannot save listing", err)
-	// 		errorListings = append(errorListings, listingItem.Id)
-	// 	}
-	// }
-
-	// if len(errorListings) > 0 {
-	// 	return false, fmt.Errorf("Cannot save listings: %v", errorListings)
-	// }
 	_, err := repositories.SaveOne(listingItem)
 	if err != nil {
 		fmt.Println("Cannot save listing", err)
 		return false, err
-		// errorListings = append(errorListings, listingItem.Id)
 	}
 	return true, nil
 }

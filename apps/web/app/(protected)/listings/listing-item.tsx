@@ -33,7 +33,7 @@ export async function ListingItem({ listing, isLogged }: ListingItemProps) {
 
   return (
     <Link href={getListingURL(listing)} key={listing.id}>
-      <Card className="w-full max-w-md shadow-none overflow-hidden rounded-lg border-none transition-all">
+      <Card className="w-full max-w-md relative shadow-none overflow-hidden rounded-lg border-none transition-all">
         <Image
           src={listing?.image!}
           width={500}
@@ -52,7 +52,7 @@ export async function ListingItem({ listing, isLogged }: ListingItemProps) {
               {listing.forSale ? "Venda" : "Aluguel"}
             </div>
           </div>
-          <h3 className="text-lg font-semibold mb-2">
+          <h3 className="text-base font-semibold mb-2 text-muted-foreground">
             {listing.name || listing.address}
           </h3>
           <div className="flex items-center text-sm text-muted-foreground mb-4">

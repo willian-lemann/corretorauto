@@ -113,12 +113,27 @@ export default async function ListingDetails({ params }: ListingDetailsProps) {
                   className="text-justify"
                   dangerouslySetInnerHTML={{ __html: listing.content }}
                 />
+
+                {/* <div className="relative max-w-2xl mx-auto">
+                  <div className="overflow-hidden transition-all duration-300 ease-in-out max-h-[100px]">
+                    <div
+                      className="text-justify"
+                      dangerouslySetInnerHTML={{ __html: listing.content }}
+                    />
+
+                    <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background to-transparent"></div>
+                  </div>
+
+                  <div className="mt-4 text-center">
+                    <Button className="">Ver mais</Button>
+                  </div>
+                </div> */}
               </div>
             </div>
           </div>
         </section>
 
-        <section className="container px-4 md:px-6 py-12 md:py-16 lg:py-20">
+        <section className="container px-8 py-12 md:py-16 lg:py-20">
           <div className="grid gap-8 lg:gap-12">
             <div>
               <h2 className="text-2xl md:text-3xl font-bold">Galeria</h2>
