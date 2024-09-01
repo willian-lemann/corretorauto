@@ -2,58 +2,19 @@ import { supabaseDB } from "@/lib/supabase";
 
 import { auth } from "@clerk/nextjs/server";
 import { cache } from "react";
-import { Pagination } from "./pagination";
+import { Pagination } from "@/components/pagination";
 import { ListingItem } from "./listing-item";
 import { List } from "lucide-react";
 import { SeeMore } from "./see-more";
 import { userAgent } from "next/server";
 import { headers } from "next/headers";
+import { getListings } from "@/data-access/get-listings";
 
 const pageSize = 12;
 
 const getListingsLimited = cache(async () => {
   return await supabaseDB.from("listings").select("*").limit(10);
 });
-
-type GetListingParams = {
-  page: number;
-  query: string;
-  filter: string;
-  type: string;
-};
-
-const getListings = cache(
-  async ({ filter, page, query, type }: GetListingParams) => {
-    const offset = (+page - 1) * pageSize;
-
-    let queryRaw = supabaseDB
-      .from("listings")
-      .select("*", { count: "exact" })
-      .range(offset, offset + pageSize - 1);
-
-    if (type) {
-      queryRaw = queryRaw.eq("type", type);
-    }
-
-    if (filter) {
-      queryRaw = queryRaw.or(`forSale.eq.${filter !== "Aluguel"}`);
-    }
-
-    if (query) {
-      const isQuerySearch = isNaN(Number(query));
-
-      if (!isQuerySearch) {
-        queryRaw = queryRaw.or(`ref.eq.${query}, id.eq.${query}`);
-      } else {
-        queryRaw = queryRaw.textSearch("address", query, {
-          type: "websearch",
-        });
-      }
-    }
-
-    return await queryRaw;
-  }
-);
 
 type ListingsProps = {
   searchParams: { page: number; q: string; filter: string; type: string };

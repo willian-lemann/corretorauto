@@ -1,11 +1,21 @@
-import axios from "axios";
+import { supabaseDB } from "@/lib/supabase";
 
-export async function getAgents() {
-  const response = await axios.post(
-    "https://www.crecisc.conselho.net.br/form_pesquisa_cadastro_geral_site.php",
-    {
-      cidade: "Imbituba",
-    }
-  );
-  return response.data;
+type GetAgentsParams = {
+  page: number;
+  query: string;
+  pageSize: number;
+};
+
+export async function getAgents({ page, query, pageSize }: GetAgentsParams) {
+  const offset = (+page - 1) * pageSize;
+
+  let queryRaw = supabaseDB.from("agent_list").select("*", { count: "exact" });
+
+  if (query) {
+    queryRaw = queryRaw.ilike("name", `%${query}%`);
+  } else {
+    queryRaw = queryRaw.range(offset, offset + pageSize - 1);
+  }
+
+  return await queryRaw;
 }
