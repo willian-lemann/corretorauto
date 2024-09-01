@@ -189,7 +189,7 @@ export default async function Dashboard() {
           <CardTitle>Imóveis mais vistos</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {mockTopProperties.map((property) => (
               <ListingItem
                 key={property.id}
@@ -197,7 +197,7 @@ export default async function Dashboard() {
                 isLogged={true}
               />
             ))}
-          </div>
+          </div> */}
         </CardContent>
       </Card>
     </div>
