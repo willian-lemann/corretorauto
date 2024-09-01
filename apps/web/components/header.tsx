@@ -12,7 +12,7 @@ export async function Header() {
   const user = await getUser({ id: isAuthenticated! });
 
   function renderAgentButton() {
-    if (!isAuthenticated && !user) {
+    if (!isAuthenticated) {
       return null;
     }
 
@@ -40,7 +40,7 @@ export async function Header() {
         </Link>
 
         <div className="flex items-center gap-4">
-          {renderAgentButton()}
+          {user ? renderAgentButton() : null}
 
           {isAuthenticated ? (
             <UserButton />

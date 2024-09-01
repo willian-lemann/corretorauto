@@ -72,7 +72,9 @@ export async function checkAgent(prevState: any, formData: FormData) {
       .filter("agentId", "eq", agent.creci)
       .single();
 
-    if (foundAgentWithAgentId) {
+    console.log("agentid ", foundAgentWithAgentId);
+
+    if (foundAgentWithAgentId.data) {
       return {
         error: "Não é possível logar com um CRECI de outro corretor",
         success: false,

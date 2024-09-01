@@ -1,14 +1,8 @@
 import { getUser } from "@/data-access/get-user";
-import { supabaseDB } from "@/lib/supabase";
-import { auth } from "@clerk/nextjs/server";
-import { redirect } from "next/navigation";
+import { saveUser } from "@/data-access/save-user";
 
-async function saveUserToDatabase(userId: string) {
-  const response = await supabaseDB
-    .from("users")
-    .insert({ userAuthId: userId });
-  return response;
-}
+import { auth, clerkClient } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
 
 async function getUserFromDatabase(userId: string) {
   const user = await getUser({ id: userId });
@@ -22,7 +16,12 @@ export default async function CallbackAuthPage() {
     const hasUserInDatabase = await getUserFromDatabase(userId);
 
     if (!hasUserInDatabase) {
-      const { error } = await saveUserToDatabase(userId);
+      const loggedUser = await clerkClient.users.getUser(userId);
+      const [emailData] = loggedUser.emailAddresses;
+      const email = emailData?.emailAddress!;
+      const fullName = loggedUser.fullName!;
+
+      const { error } = await saveUser({ userId, fullName, email });
       if (error) return console.log("did not save to database user", userId);
       return redirect("/");
     }

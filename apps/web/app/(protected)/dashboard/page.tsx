@@ -13,6 +13,9 @@ import {
   BathIcon,
   BedIcon,
 } from "lucide-react";
+import { ListingItem } from "../listings/listing-item";
+import { getUser } from "@/data-access/get-user";
+import { auth, clerkClient } from "@clerk/nextjs/server";
 
 // Mock data - replace with actual data from your backend
 const agentData = {
@@ -91,76 +94,16 @@ const mockTopProperties = [
   },
 ];
 
-type ListingItemProps = {
-  isLogged: boolean;
-  listing: {
-    id: string;
-    image: string;
-    name: string;
-    address: string;
-    bedrooms: number;
-    bathrooms: number;
-    area: string;
-    price: number;
-    photos: { href: string }[];
-    forSale: boolean;
-    type: string;
-    clicks: number;
-  };
-};
+export default async function Dashboard() {
+  const { userId } = auth();
+  const loggedUser = await clerkClient.users.getUser(userId!);
 
-function ListingItem({ listing, isLogged }: ListingItemProps) {
-  function getListingURL(listingItem: any) {
-    // For this example, we'll always use the logged-in URL
-    return `/listings/${listingItem.id}-${listingItem.address.replace(/\s+/g, "-").toLowerCase()}`;
-  }
+  const user = await getUser({ id: userId! });
 
-  return (
-    <Link href={getListingURL(listing)} key={listing.id}>
-      <Card className="w-full max-w-md relative shadow-none overflow-hidden rounded-lg border-none transition-all">
-        <Image
-          src={listing.image}
-          width={500}
-          height={300}
-          alt="Property Image"
-          className="w-full h-48 object-cover"
-          style={{ aspectRatio: "500/300", objectFit: "cover" }}
-        />
+  const [email] = loggedUser.emailAddresses;
 
-        <div className="py-4 bg-background">
-          <div className="flex items-center justify-between mb-2">
-            <div className="inline-block px-3 py-1 text-xs font-medium rounded-full bg-muted text-muted-foreground">
-              {listing.type}
-            </div>
-            <div className="inline-block px-3 py-1 text-xs font-medium rounded-full bg-primary text-primary-foreground">
-              {listing.forSale ? "Venda" : "Aluguel"}
-            </div>
-          </div>
-          <h3 className="text-base font-semibold mb-2 text-muted-foreground">
-            {listing.name || listing.address}
-          </h3>
-          <div className="flex items-center text-sm text-muted-foreground mb-4">
-            <BedIcon className="w-4 h-4 mr-1" />
-            {listing.bedrooms} Quarto(s)
-            <Separator orientation="vertical" className="mx-2" />
-            <BathIcon className="w-4 h-4 mr-1" />
-            {listing.bathrooms} Banheiro(s)
-          </div>
-          <div className="flex items-center justify-between">
-            <div className="text-2xl font-bold">
-              R$ {listing.price.toLocaleString()}
-            </div>
-            <div className="text-sm text-muted-foreground">
-              {listing.clicks} clicks
-            </div>
-          </div>
-        </div>
-      </Card>
-    </Link>
-  );
-}
+  console.log("user", user);
 
-export default function Dashboard() {
   return (
     <div className="min-h-screen bg-gray-100 p-8">
       <div className="max-w-7xl mx-auto space-y-8">
@@ -169,29 +112,23 @@ export default function Dashboard() {
           <h1 className="text-2xl font-bold mb-4">Dashboard</h1>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <p className="font-semibold">{agentData.name}</p>
-              <p className="text-sm text-gray-600">{agentData.email}</p>
+              <p className="font-semibold">{loggedUser.fullName}</p>
+              <p className="text-sm text-gray-600">{email?.emailAddress}</p>
             </div>
             <div className="text-right">
-              <p className="font-semibold">CRECI: {agentData.creciNumber}</p>
+              <p className="font-semibold">CRECI: {user.agent.agentId}</p>
               <div className="flex justify-end items-center mt-1 space-x-2">
                 <Badge
-                  variant={
-                    agentData.creciStatus === "Active"
-                      ? "default"
-                      : "destructive"
-                  }
+                  variant={user.agent.isActive ? "success" : "destructive"}
                 >
-                  {agentData.creciStatus}
+                  {user.agent.isActive ? "Ativo" : "Inativo"}
                 </Badge>
                 <Badge
-                  variant={
-                    agentData.creciRegularity === "Regular"
-                      ? "default"
-                      : "destructive"
-                  }
+                  variant={user.agent.isRegular ? "success" : "destructive"}
                 >
-                  {agentData.creciRegularity}
+                  {user.agent.isRegular
+                    ? "Situação Regular"
+                    : "Situação Irregular"}
                 </Badge>
               </div>
             </div>
