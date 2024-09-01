@@ -1,12 +1,14 @@
 import { Button } from "@/components/ui/button";
-import {
-  BathIcon,
-  BedIcon,
-  RulerIcon,
-  Share2Icon,
-  HeartIcon,
-} from "lucide-react";
+import { BathIcon, BedIcon, RulerIcon } from "lucide-react";
 import Image from "next/image";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 
 import { Card, CardContent } from "@/components/ui/card";
 
@@ -45,6 +47,22 @@ export default async function ListingDetails({ params }: ListingDetailsProps) {
     <div className="flex flex-col min-h-dvh">
       <section className="bg-white">
         <div className="container px-4 py-8 md:px-8 md:py-12">
+          <Breadcrumb className="pb-8">
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink href="/">Home</BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbPage>Imoveis</BreadcrumbPage>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbPage>{listing.ref}</BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+
           <div className="flex justify-between items-center mb-6">
             <h1 className="text-2xl md:text-3xl font-bold">
               {listing.name || listing.address}
