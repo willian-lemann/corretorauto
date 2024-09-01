@@ -99,10 +99,14 @@ export default async function ListingDetails({ params }: ListingDetailsProps) {
                     <BathIcon className="w-5 h-5 text-muted-foreground" />
                     <span>{listing.bathrooms} Banheiro(s)</span>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <RulerIcon className="w-5 h-5 text-muted-foreground" />
-                    <span>{listing.area} m²</span>
-                  </div>
+
+                  {listing.area ? (
+                    <div className="flex items-center gap-2">
+                      <RulerIcon className="w-5 h-5 text-muted-foreground" />
+                      <span>{listing.area}</span>
+                    </div>
+                  ) : null}
+
                   <div className="flex items-center gap-2">
                     <LocateIcon className="w-5 h-5 text-muted-foreground" />
                     <span>{listing.address}</span>

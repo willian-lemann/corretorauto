@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { BathIcon, BedIcon } from "lucide-react";
+import { BathIcon, BedIcon, RulerIcon } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { Card } from "@/components/ui/card";
 import { login } from "@/app/utils/redirects";
@@ -21,6 +21,7 @@ type ListingItemProps = {
     photos: { href: string }[];
     forSale: boolean;
     type: string;
+    ref: string;
   };
 };
 
@@ -61,6 +62,13 @@ export async function ListingItem({ listing, isLogged }: ListingItemProps) {
             <Separator orientation="vertical" className="mx-2" />
             <BathIcon className="w-4 h-4 mr-1" />
             {listing.bathrooms} Banheiro(s)
+            <Separator orientation="vertical" className="mx-2" />
+            {listing.area ? (
+              <>
+                <RulerIcon className="w-4 h-4 mr-1" />
+                {listing.area}
+              </>
+            ) : null}
           </div>
           <div className="flex items-center justify-between">
             <div className="text-2xl font-bold">R$ {listing.price}</div>

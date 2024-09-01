@@ -95,6 +95,16 @@ func scrapePageInside(listing structs.ListingItem, ch chan structs.ListingItem, 
 
 	c := colly.NewCollector()
 
+	c.OnHTML("div.maincontainer div.tags", func(h *colly.HTMLElement) {
+		id, _ := strconv.Atoi(utils.GetIDFromLink(h.Response.Request.URL.String()))
+		if id == listing.Id {
+			h.ForEach("p", func(i int, h *colly.HTMLElement) {
+				if strings.Contains(h.Text, "Área Total:") {
+					listing.Area = h.ChildText("b")
+				}
+			})
+		}
+	})
 	c.OnHTML("div.maincontainer div#desc_descricao", func(h *colly.HTMLElement) {
 		id, _ := strconv.Atoi(utils.GetIDFromLink(h.Response.Request.URL.String()))
 		if id == listing.Id {
@@ -108,13 +118,15 @@ func scrapePageInside(listing structs.ListingItem, ch chan structs.ListingItem, 
 	c.OnHTML("div.lista-inicial-container div#galeria-inicial div.glide__track ul.glide__slides", func(h *colly.HTMLElement) {
 		id, _ := strconv.Atoi(utils.GetIDFromLink(h.Response.Request.URL.String()))
 		if id == listing.Id {
-			imagePhoto := h.ChildAttr("li img.item-lista", "src")
-			if utils.CheckURLImage(imagePhoto) {
-				listing.Photos = append(listing.Photos, structs.Photos{
-					Href:          imagePhoto,
-					ListingItemId: listing.Id,
-				})
-			}
+			h.ForEach("li", func(i int, h *colly.HTMLElement) {
+				imagePhoto := h.ChildAttr("img.item-lista", "src")
+				if utils.CheckURLImage(imagePhoto) {
+					listing.Photos = append(listing.Photos, structs.Photos{
+						Href:          imagePhoto,
+						ListingItemId: listing.Id,
+					})
+				}
+			})
 		}
 	})
 	c.Visit(listing.Link)

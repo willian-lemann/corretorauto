@@ -1,4 +1,5 @@
 import { supabaseDB } from "@/lib/supabase";
+
 import { cache } from "react";
 
 type GetListingParams = {
@@ -39,6 +40,7 @@ export const getListings = cache(
       }
     }
 
-    return await queryRaw;
+    const response = await queryRaw;
+    return response;
   }
 );

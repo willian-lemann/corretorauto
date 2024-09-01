@@ -9,6 +9,7 @@ import { SeeMore } from "./see-more";
 import { userAgent } from "next/server";
 import { headers } from "next/headers";
 import { getListings } from "@/data-access/get-listings";
+import { setListingsCount } from "./set-listings-count";
 
 const pageSize = 12;
 

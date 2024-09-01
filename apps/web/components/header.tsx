@@ -34,7 +34,7 @@ export async function Header() {
   return (
     <header className="bg-background border-b">
       <div className="container py-3 flex items-center justify-between">
-        <Link href="#" className="flex items-center gap-2" prefetch={false}>
+        <Link href="/" className="flex items-center gap-2" prefetch={false}>
           <MountainIcon className="w-6 h-6" />
           <span className="font-bold text-lg">ImovelFacil</span>
         </Link>
