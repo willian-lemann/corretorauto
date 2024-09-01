@@ -1,15 +1,14 @@
 import { Button } from "@/components/ui/button";
-import { BathIcon, BedIcon, LocateIcon, RulerIcon } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
 import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
+  BathIcon,
+  BedIcon,
+  RulerIcon,
+  Share2Icon,
+  HeartIcon,
+} from "lucide-react";
+import Image from "next/image";
+
+import { Card, CardContent } from "@/components/ui/card";
 
 import { Metadata, ResolvingMetadata } from "next";
 import { createSlug, extractIdFromSlug } from "@/lib/utils";
@@ -37,151 +36,162 @@ export async function generateMetadata(
     },
   };
 }
+
 export default async function ListingDetails({ params }: ListingDetailsProps) {
   const id = extractIdFromSlug(params.slug);
   const listing = await getListing(id!);
 
   return (
-    <>
-      <div className="flex flex-col min-h-dvh">
-        <section className="bg-white">
-          <div className="container px-8 py-12 md:py-12">
-            <Breadcrumb className="pb-8">
-              <BreadcrumbList>
-                <BreadcrumbItem>
-                  <BreadcrumbLink href="/">Home</BreadcrumbLink>
-                </BreadcrumbItem>
-                <BreadcrumbSeparator />
-                <BreadcrumbItem>
-                  <BreadcrumbPage>Imoveis</BreadcrumbPage>
-                </BreadcrumbItem>
-                <BreadcrumbSeparator />
-                <BreadcrumbItem>
-                  <BreadcrumbPage>{listing.ref}</BreadcrumbPage>
-                </BreadcrumbItem>
-              </BreadcrumbList>
-            </Breadcrumb>
-
-            <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
-              <div className="flex flex-col gap-4 md:gap-6">
-                <Image
-                  src={listing.image}
-                  width={800}
-                  height={500}
-                  alt="Imagem de um apartamento"
-                  className="rounded-lg object-cover aspect-[4/3]"
-                />
-              </div>
-
-              <div className="grid gap-4 md:gap-6">
-                <div>
-                  <h1 className="text-3xl md:text-4xl font-bold">
-                    {listing.name || listing.address}
-                  </h1>
-                  <p className="text-muted-foreground">
-                    {listing.bedrooms} Quarto(s) · {listing.bathrooms}{" "}
-                    Banheiro(s) · {listing.area} m²
-                  </p>
-
-                  <Button asChild>
-                    <Link href={listing.link} target="_blank" className="mt-4">
-                      Ir para site
-                    </Link>
-                  </Button>
-                </div>
-
-                <div className="grid gap-2">
-                  <div className="flex items-center gap-2">
-                    <BedIcon className="w-5 h-5 text-muted-foreground" />
-                    <span>{listing.bedrooms} Quarto(s)</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <BathIcon className="w-5 h-5 text-muted-foreground" />
-                    <span>{listing.bathrooms} Banheiro(s)</span>
-                  </div>
-
-                  {listing.area ? (
-                    <div className="flex items-center gap-2">
-                      <RulerIcon className="w-5 h-5 text-muted-foreground" />
-                      <span>{listing.area}</span>
-                    </div>
-                  ) : null}
-
-                  <div className="flex items-center gap-2">
-                    <LocateIcon className="w-5 h-5 text-muted-foreground" />
-                    <span>{listing.address}</span>
-                  </div>
-                </div>
-
-                <div
-                  className="text-justify"
-                  dangerouslySetInnerHTML={{ __html: listing.content }}
-                />
-
-                {/* <div className="relative max-w-2xl mx-auto">
-                  <div className="overflow-hidden transition-all duration-300 ease-in-out max-h-[100px]">
-                    <div
-                      className="text-justify"
-                      dangerouslySetInnerHTML={{ __html: listing.content }}
-                    />
-
-                    <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background to-transparent"></div>
-                  </div>
-
-                  <div className="mt-4 text-center">
-                    <Button className="">Ver mais</Button>
-                  </div>
-                </div> */}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="container px-8 py-12 md:py-16 lg:py-20">
-          <div className="grid gap-8 lg:gap-12">
-            <div>
-              <h2 className="text-2xl md:text-3xl font-bold">Galeria</h2>
-              <div className="grid grid-cols-2 md:grid-cols-4  gap-4 mt-4">
-                {listing?.photos?.map((photo: any) => (
-                  <img
-                    key={photo.href}
-                    src={photo.href}
-                    width={400}
-                    height={300}
-                    alt="Imagem de um ímóvel"
-                    className="rounded-lg object-cover aspect-[4/3]"
-                  />
-                ))}
-              </div>
-            </div>
-
-            {/* <div>
-            <h2 className="text-2xl md:text-3xl font-bold">Contact Us</h2>
-            <form className="grid gap-4 mt-4">
-              <div className="grid gap-2">
-                <Label htmlFor="name">Name</Label>
-                <Input id="name" type="text" placeholder="Enter your name" />
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="email">Email</Label>
-                <Input id="email" type="email" placeholder="Enter your email" />
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="message">Message</Label>
-                <Textarea
-                  id="message"
-                  rows={5}
-                  placeholder="Enter your message"
-                />
-              </div>
-              <Button type="submit" className="justify-self-start">
-                Submit Inquiry
+    <div className="flex flex-col min-h-dvh">
+      <section className="bg-white">
+        <div className="container px-4 py-8 md:px-8 md:py-12">
+          <div className="flex justify-between items-center mb-6">
+            <h1 className="text-2xl md:text-3xl font-bold">
+              {listing.name || listing.address}
+            </h1>
+            {/* <div className="flex gap-4">
+              <Button variant="outline" size="icon">
+                <Share2Icon className="h-4 w-4" />
+                <span className="sr-only">Share</span>
               </Button>
-            </form>
-          </div> */}
+              <Button variant="outline" size="icon">
+                <HeartIcon className="h-4 w-4" />
+                <span className="sr-only">Save</span>
+              </Button>
+            </div> */}
           </div>
-        </section>
-      </div>
-    </>
+
+          <div className="grid md:grid-cols-2 gap-4">
+            <div className="relative aspect-[4/3] rounded-lg overflow-hidden">
+              <Image
+                src={listing.image}
+                layout="fill"
+                objectFit="cover"
+                alt="Main property image"
+              />
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              {listing.photos
+                .slice(0, 4)
+                .map((photo: { href: string; listingItemId: string }) => (
+                  <div
+                    key={photo.listingItemId}
+                    className="relative h-auto w-full rounded-lg overflow-hidden"
+                  >
+                    <Image
+                      src={photo.href}
+                      fill
+                      className="object-cover"
+                      alt={`Imagem do imovel ${photo.listingItemId}`}
+                    />
+                  </div>
+                ))}
+            </div>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8 mt-8">
+            <div className="md:col-span-2">
+              <h2 className="text-xl font-semibold mb-4">
+                Entire place in {listing.address}
+              </h2>
+              <div className="flex gap-4 text-sm text-muted-foreground mb-4">
+                <span>
+                  {listing.bedrooms} bedroom{listing.bedrooms > 1 ? "s" : ""}
+                </span>
+                <span>·</span>
+                <span>
+                  {listing.bathrooms} bathroom{listing.bathrooms > 1 ? "s" : ""}
+                </span>
+                {listing.area && (
+                  <>
+                    <span>·</span>
+                    <span>{listing.area}</span>
+                  </>
+                )}
+              </div>
+
+              <div className="border-t border-b py-6 my-6">
+                <div className="grid gap-4">
+                  <div className="flex items-center gap-4">
+                    <BedIcon className="w-6 h-6" />
+                    <div>
+                      <h3 className="font-semibold">Bedrooms</h3>
+                      <p className="text-sm text-muted-foreground">
+                        {listing.bedrooms} bedroom
+                        {listing.bedrooms > 1 ? "s" : ""}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <BathIcon className="w-6 h-6" />
+                    <div>
+                      <h3 className="font-semibold">Bathrooms</h3>
+                      <p className="text-sm text-muted-foreground">
+                        {listing.bathrooms} bathroom
+                        {listing.bathrooms > 1 ? "s" : ""}
+                      </p>
+                    </div>
+                  </div>
+                  {listing.area && (
+                    <div className="flex items-center gap-4">
+                      <RulerIcon className="w-6 h-6" />
+                      <div>
+                        <h3 className="font-semibold">Area</h3>
+                        <p className="text-sm text-muted-foreground">
+                          {listing.area}
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div
+                className="text-sm text-muted-foreground"
+                dangerouslySetInnerHTML={{
+                  __html: listing.content.replace(
+                    `<button class="bold button-ler-mais">Ler <!-- -->mais<div class="chevron-ler-mais selected"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="transform:rotate(270deg)"><path fill-rule="evenodd" clip-rule="evenodd" stroke-width="1" d="M5.64645 2.64645C5.84171 2.45118 6.15829 2.45118 6.35355 2.64645L11.3536 7.64645C11.5488 7.84171 11.5488 8.15829 11.3536 8.35355L6.35355 13.3536C6.15829 13.5488 5.84171 13.5488 5.64645 13.3536C5.45118 13.1583 5.45118 12.8417 5.64645 12.6464L10.2929 8L5.64645 3.35355C5.45118 3.15829 5.45118 2.84171 5.64645 2.64645Z" stroke="currentColor"></path></svg></div></button>`,
+                    ""
+                  ),
+                }}
+              />
+            </div>
+
+            <div>
+              <Card>
+                <CardContent className="p-6">
+                  <div className="flex justify-between items-center mb-4">
+                    <div className="text-2xl font-bold">
+                      R$ {listing.price.toLocaleString()}
+                    </div>
+                  </div>
+
+                  <Button className="w-full">Ir para site</Button>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="container px-4 py-8 md:px-8 md:py-12">
+        <h2 className="text-2xl font-bold mb-6">Galeria</h2>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {listing?.photos?.map((photo: any, index: number) => (
+            <div
+              key={index}
+              className="relative aspect-square rounded-lg overflow-hidden"
+            >
+              <Image
+                src={photo.href}
+                layout="fill"
+                objectFit="cover"
+                alt={`Property image ${index + 1}`}
+              />
+            </div>
+          ))}
+        </div>
+      </section>
+    </div>
   );
 }
