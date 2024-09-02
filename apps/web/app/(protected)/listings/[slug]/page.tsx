@@ -3,6 +3,7 @@ import {
   BathIcon,
   BedIcon,
   HeartIcon,
+  LayoutGrid,
   RulerIcon,
   Share2Icon,
 } from "lucide-react";
@@ -23,6 +24,8 @@ import { createSlug, extractIdFromSlug } from "@/lib/utils";
 import { getListing } from "@/data-access/get-listing";
 import { Share } from "./share";
 import { GoToSite } from "./go-to-side";
+import { Label } from "@/components/ui/label";
+import Link from "next/link";
 
 type ListingDetailsProps = {
   params: {
@@ -94,7 +97,7 @@ export default async function ListingDetails({ params }: ListingDetailsProps) {
                 alt="Main property image"
               />
             </div>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-4 relative">
               {listing.photos
                 .slice(0, 4)
                 .map((photo: { href: string; listingItemId: string }) => (
@@ -110,6 +113,19 @@ export default async function ListingDetails({ params }: ListingDetailsProps) {
                     />
                   </div>
                 ))}
+
+              <Link
+                href="#gallery"
+                className="absolute bottom-4 right-4"
+              >
+                <Button
+                  variant="outline"
+                  className=" hover:bg-white flex items-center gap-2"
+                >
+                  <LayoutGrid className="h-5 w-5" />
+                  <Label className="cursor-pointer">Mostre todas as fotos</Label>
+                </Button>
+              </Link>
             </div>
           </div>
 
@@ -198,7 +214,7 @@ export default async function ListingDetails({ params }: ListingDetailsProps) {
         </div>
       </section>
 
-      <section className="container px-4 py-8 md:px-8 md:py-12">
+      <section id="gallery" className="container px-4 py-8 md:px-8 md:py-12">
         <h2 className="text-2xl font-bold mb-6">Galeria</h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {listing?.photos?.map((photo: any, index: number) => (
