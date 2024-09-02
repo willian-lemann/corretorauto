@@ -9,7 +9,7 @@ import {
   Users,
   UsersIcon,
 } from "lucide-react";
-import { ListingItem } from "../listings/listing-item";
+
 import { getUser } from "@/data-access/get-user";
 import { auth, clerkClient } from "@clerk/nextjs/server";
 
