@@ -13,6 +13,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { ProgressiveImage } from "@/components/progressive-image";
 
 type ListingItemProps = {
   isLogged: boolean;
@@ -47,8 +48,8 @@ export async function ListingItem({ listing, isLogged }: ListingItemProps) {
           <CarouselContent>
             {listing.photos.map(({ href }) => (
               <CarouselItem key={href}>
-                <div className="w-auto h-[300px] relative rounded-lg">
-                  <Image
+                <div className="w-auto h-[300px] relative rounded-lg overflow-hidden">
+                  <ProgressiveImage
                     src={href!}
                     alt="Property Image"
                     fill
