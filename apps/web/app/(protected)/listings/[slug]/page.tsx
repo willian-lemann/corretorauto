@@ -1,12 +1,5 @@
 import { Button } from "@/components/ui/button";
-import {
-  BathIcon,
-  BedIcon,
-  HeartIcon,
-  LayoutGrid,
-  RulerIcon,
-  Share2Icon,
-} from "lucide-react";
+import { BathIcon, BedIcon, LayoutGrid, RulerIcon } from "lucide-react";
 import Image from "next/image";
 import {
   Breadcrumb,
@@ -54,17 +47,11 @@ export default async function ListingDetails({ params }: ListingDetailsProps) {
   const id = extractIdFromSlug(params.slug);
   const listing = await getListing(id!);
 
-  const handleShare = () => {
-    const encodedLink = encodeURIComponent(window.location.href);
-    const whatsappLink = `https://api.whatsapp.com/send?text=${encodedLink}`;
-    window.open(whatsappLink, "_blank");
-  };
-
   return (
     <div className="flex flex-col min-h-dvh">
       <section className="bg-white">
         <div className="container px-4 py-8 md:px-8 md:py-12">
-          <Breadcrumb className="pb-8">
+          <Breadcrumb className="pb-4">
             <BreadcrumbList>
               <BreadcrumbItem>
                 <BreadcrumbLink href="/">Home</BreadcrumbLink>
@@ -80,7 +67,7 @@ export default async function ListingDetails({ params }: ListingDetailsProps) {
             </BreadcrumbList>
           </Breadcrumb>
 
-          <div className="flex justify-between items-center mb-6">
+          <div className="flex justify-between items-center mb-5">
             <h1 className="text-2xl md:text-3xl font-bold">
               {listing.name || listing.address}
             </h1>
@@ -88,12 +75,12 @@ export default async function ListingDetails({ params }: ListingDetailsProps) {
             <Share />
           </div>
 
-          <div className="grid md:grid-cols-2 gap-4">
-            <div className="relative aspect-[4/3] rounded-lg overflow-hidden">
+          <div className="grid md:grid-cols-2 h-[400px] gap-4">
+            <div className="relative h-auto rounded-lg overflow-hidden">
               <Image
                 src={listing.image}
-                layout="fill"
-                objectFit="cover"
+                fill
+                className="object-cover"
                 alt="Main property image"
               />
             </div>
@@ -116,14 +103,16 @@ export default async function ListingDetails({ params }: ListingDetailsProps) {
 
               <Link
                 href="#gallery"
-                className="absolute bottom-4 right-4"
+                className="hidden md:block absolute bottom-4 right-4"
               >
                 <Button
                   variant="outline"
                   className=" hover:bg-white flex items-center gap-2"
                 >
                   <LayoutGrid className="h-5 w-5" />
-                  <Label className="cursor-pointer">Mostre todas as fotos</Label>
+                  <Label className="cursor-pointer">
+                    Mostre todas as fotos
+                  </Label>
                 </Button>
               </Link>
             </div>

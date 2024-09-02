@@ -56,7 +56,7 @@ export async function Listings({
           </div>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 container gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 px-4 md:container gap-6">
           {data?.map((listing) => (
             <ListingItem
               key={listing.id}
