@@ -1,5 +1,11 @@
 import { Button } from "@/components/ui/button";
-import { BathIcon, BedIcon, RulerIcon } from "lucide-react";
+import {
+  BathIcon,
+  BedIcon,
+  HeartIcon,
+  RulerIcon,
+  Share2Icon,
+} from "lucide-react";
 import Image from "next/image";
 import {
   Breadcrumb,
@@ -15,6 +21,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Metadata, ResolvingMetadata } from "next";
 import { createSlug, extractIdFromSlug } from "@/lib/utils";
 import { getListing } from "@/data-access/get-listing";
+import { Share } from "./share";
+import { GoToSite } from "./go-to-side";
 
 type ListingDetailsProps = {
   params: {
@@ -43,6 +51,12 @@ export default async function ListingDetails({ params }: ListingDetailsProps) {
   const id = extractIdFromSlug(params.slug);
   const listing = await getListing(id!);
 
+  const handleShare = () => {
+    const encodedLink = encodeURIComponent(window.location.href);
+    const whatsappLink = `https://api.whatsapp.com/send?text=${encodedLink}`;
+    window.open(whatsappLink, "_blank");
+  };
+
   return (
     <div className="flex flex-col min-h-dvh">
       <section className="bg-white">
@@ -67,16 +81,8 @@ export default async function ListingDetails({ params }: ListingDetailsProps) {
             <h1 className="text-2xl md:text-3xl font-bold">
               {listing.name || listing.address}
             </h1>
-            {/* <div className="flex gap-4">
-              <Button variant="outline" size="icon">
-                <Share2Icon className="h-4 w-4" />
-                <span className="sr-only">Share</span>
-              </Button>
-              <Button variant="outline" size="icon">
-                <HeartIcon className="h-4 w-4" />
-                <span className="sr-only">Save</span>
-              </Button>
-            </div> */}
+
+            <Share />
           </div>
 
           <div className="grid md:grid-cols-2 gap-4">
@@ -184,7 +190,7 @@ export default async function ListingDetails({ params }: ListingDetailsProps) {
                     </div>
                   </div>
 
-                  <Button className="w-full">Ir para site</Button>
+                  <GoToSite link={listing.link} />
                 </CardContent>
               </Card>
             </div>

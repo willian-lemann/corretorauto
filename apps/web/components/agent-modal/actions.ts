@@ -40,8 +40,6 @@ export async function checkAgent(prevState: any, formData: FormData) {
     );
 
     if (response.status === 500) {
-      console.log("passou response 500");
-
       return {
         error: "Ocorreu um erro ao tentar checar o corretor",
         success: false,
@@ -71,8 +69,6 @@ export async function checkAgent(prevState: any, formData: FormData) {
       .select("*")
       .filter("agentId", "eq", agent.creci)
       .single();
-
-    console.log("agentid ", foundAgentWithAgentId);
 
     if (foundAgentWithAgentId.data) {
       return {
