@@ -8,6 +8,7 @@ export function cn(...inputs: ClassValue[]) {
 export function formatMoney(money?: number) {
   const formatter = new Intl.NumberFormat("pt-BR", {
     style: "currency",
+    maximumFractionDigits: 3,
     currency: "BRL",
   });
 

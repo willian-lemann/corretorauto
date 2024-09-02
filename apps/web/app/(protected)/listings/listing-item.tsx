@@ -42,9 +42,8 @@ export async function ListingItem({ listing, isLogged }: ListingItemProps) {
   return (
     <Link href={getListingURL(listing)} key={listing.id}>
       <Card className="w-full max-w-md relative shadow-none overflow-hidden rounded-lg border-none transition-all">
-        <Carousel className="relative w-full max-w-xs">
-          <CarouselPrevious className="absolute left-2 top-1/2 z-[9999]  -translate-y-1/2 rounded-full bg-white/60 p-0 hover:bg-white/80" />
-
+        <Carousel className="group relative w-full md:max-w-xs">
+          <CarouselPrevious className="absolute  md:hidden md:group-hover:flex left-2 top-1/2 z-[9999]  -translate-y-1/2 rounded-full bg-white/80 p-0 hover:bg-white" />
           <CarouselContent>
             {listing.photos.map(({ href }) => (
               <CarouselItem key={href}>
@@ -59,8 +58,7 @@ export async function ListingItem({ listing, isLogged }: ListingItemProps) {
               </CarouselItem>
             ))}
           </CarouselContent>
-
-          <CarouselNext className="absolute right-2 top-1/2 z-[9999]  -translate-y-1/2 rounded-full bg-white/60 p-0 hover:bg-white/80" />
+          <CarouselNext className="absolute md:hidden md:group-hover:flex animate-fadeIn right-2 top-1/2 z-[9999] -translate-y-1/2 rounded-full bg-white/80 p-0 hover:bg-white" />
         </Carousel>
 
         <div className="py-4 bg-background">
@@ -91,14 +89,6 @@ export async function ListingItem({ listing, isLogged }: ListingItemProps) {
           </div>
           <div className="flex items-center justify-between">
             <div className="text-2xl font-bold">R$ {listing.price}</div>
-            {/* <Button
-              variant="ghost"
-              size="icon"
-              className="text-muted-foreground hover:text-primary"
-            >
-              <Heart className="w-5 h-5" />
-              <span className="sr-only">Save</span>
-            </Button> */}
           </div>
         </div>
       </Card>

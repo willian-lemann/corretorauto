@@ -74,7 +74,7 @@ export function Search() {
   }
 
   return (
-    <div className="flex md:flex-row flex-col md:items-center justify-end container w-full gap-2 bg-background rounded-lg ">
+    <div className="flex md:flex-row flex-col md:items-center justify-end px-4 md:container w-full gap-2 bg-background rounded-lg ">
       <div className="relative flex-1 max-w-lg flex">
         <SearchIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
         <Input
