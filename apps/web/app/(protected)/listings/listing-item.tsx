@@ -6,6 +6,13 @@ import { Separator } from "@/components/ui/separator";
 import { Card } from "@/components/ui/card";
 import { login } from "@/app/utils/redirects";
 import { createSlug } from "@/lib/utils";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 type ListingItemProps = {
   isLogged: boolean;
@@ -35,14 +42,26 @@ export async function ListingItem({ listing, isLogged }: ListingItemProps) {
   return (
     <Link href={getListingURL(listing)} key={listing.id}>
       <Card className="w-full max-w-md relative shadow-none overflow-hidden rounded-lg border-none transition-all">
-        <Image
-          src={listing?.image!}
-          width={500}
-          height={300}
-          alt="Property Image"
-          className="w-full h-48 object-cover"
-          style={{ aspectRatio: "500/300", objectFit: "cover" }}
-        />
+        <Carousel className="relative w-full max-w-xs">
+          <CarouselPrevious className="absolute left-2 top-1/2 z-[9999]  -translate-y-1/2 rounded-full bg-white/60 p-0 hover:bg-white/80" />
+
+          <CarouselContent>
+            {listing.photos.map(({ href }) => (
+              <CarouselItem key={href}>
+                <div className="w-auto h-[300px] relative rounded-lg">
+                  <Image
+                    src={href!}
+                    alt="Property Image"
+                    fill
+                    className="object-cover rounded-lg"
+                  />
+                </div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+
+          <CarouselNext className="absolute right-2 top-1/2 z-[9999]  -translate-y-1/2 rounded-full bg-white/60 p-0 hover:bg-white/80" />
+        </Carousel>
 
         <div className="py-4 bg-background">
           <div className="flex items-center justify-between mb-2">
