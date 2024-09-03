@@ -30,8 +30,8 @@ export const ProgressiveImage = ({
   return (
     <NextImage
       src={imageSrc as any}
-      placeholder="blur"
-      blurDataURL={placeholderURL}
+      // placeholder="blur"
+      // blurDataURL={placeholderURL}
       alt={alt}
       style={{
         filter: isLoading ? "blur(20px)" : "none",
