@@ -4,6 +4,7 @@ const nextConfig = {
     remotePatterns: [
       { hostname: "imobiliariajefersonealba.com.br" },
       { hostname: "imgs1.cdn-imobibrasil.com.br" },
+      { hostname: "digdpilwqusbkpnnbejk.supabase.co" },
       { hostname: "img.auxiliadorapredial.com.br" },
     ],
   },

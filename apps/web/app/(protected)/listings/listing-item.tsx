@@ -30,6 +30,7 @@ type ListingItemProps = {
     forSale: boolean;
     type: string;
     ref: string;
+    placeholderImage: string;
   };
 };
 
@@ -49,12 +50,11 @@ export async function ListingItem({ listing, isLogged }: ListingItemProps) {
             {listing.photos.map(({ href }) => (
               <CarouselItem key={href}>
                 <div className="w-auto h-[300px] relative rounded-lg overflow-hidden">
-                  <Image
+                  <ProgressiveImage
                     src={href!}
+                    placeholderURL={listing.placeholderImage}
                     alt="Property Image"
                     fill
-                    placeholder="blur"
-                    blurDataURL="https://digdpilwqusbkpnnbejk.supabase.co/storage/v1/object/public/images/placeholder.png"
                     className="object-cover rounded-lg"
                   />
                 </div>

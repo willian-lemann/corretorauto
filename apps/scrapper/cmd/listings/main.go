@@ -10,13 +10,13 @@ import (
 func main() {
 	var wg sync.WaitGroup
 
-	wg.Add(1)
+	wg.Add(3)
 
 	start := time.Now()
 
-	// go scrappers.ExecuteJefersonAlba(&wg)
+	go scrappers.ExecuteJefersonAlba(&wg)
 	go scrappers.CasaImoveisExecute(&wg)
-	// go scrappers.ExecuteAuxPredial(&wg)
+	go scrappers.ExecuteAuxPredial(&wg)
 
 	wg.Wait()
 

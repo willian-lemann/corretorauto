@@ -8,6 +8,8 @@ import (
 	"net/http"
 	"scrapper/config"
 	"scrapper/internal/repositories"
+	"scrapper/internal/structs"
+	"sync"
 
 	"github.com/disintegration/imaging"
 )
@@ -30,37 +32,61 @@ func imageResize(file []byte) []byte {
 }
 
 func main() {
-	images := repositories.GetListingsImages()
+	listings := repositories.GetListingsImages()
 
 	client, err := config.SupabaseClient()
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	for _, imageURL := range images {
-		resp, err := http.Get(imageURL)
-		if err != nil {
-			fmt.Println("Failed to download image:", err)
-			continue
-		}
-		defer resp.Body.Close()
+	var wg sync.WaitGroup
 
-		imageData, err := io.ReadAll(resp.Body)
-		if err != nil {
-			fmt.Println("Failed to read image data:", err)
-			continue
-		}
+	resultch := make(chan structs.ListingItem)
 
-		compressedImage := imageResize(imageData)
+	for _, listing := range listings {
+		wg.Add(1)
+		go func(id int, url string, ch chan<- structs.ListingItem, wg *sync.WaitGroup) {
+			defer wg.Done()
 
-		fmt.Println("size", len(imageData), "=>", len(compressedImage))
+			resp, err := http.Get(url)
+			if err != nil {
+				fmt.Println("Failed to download image:", err)
+				return
+			}
+			defer resp.Body.Close()
 
-		client.Storage.From("images").Upload("placeholder.png", bytes.NewReader(compressedImage))
-		if err != nil {
-			fmt.Println("Failed to upload image:", err)
-			continue
-		}
+			imageData, err := io.ReadAll(resp.Body)
+			if err != nil {
+				fmt.Println("Failed to read image data:", err)
+				return
+			}
 
-		fmt.Println("Image uploaded successfully.")
+			compressedImage := imageResize(imageData)
+
+			var fileName = fmt.Sprintf("%d.png", listing.Id)
+
+			client.Storage.From("images").Upload(fileName, bytes.NewReader(compressedImage))
+			if err != nil {
+				fmt.Println("Failed to upload image:", err)
+				return
+			}
+
+			resultURL := fmt.Sprintf("https://digdpilwqusbkpnnbejk.supabase.co/storage/v1/object/public/images/%s", fileName)
+
+			listing.PlaceholderImage = resultURL
+
+			ch <- listing
+		}(listing.Id, listing.Image, resultch, &wg)
 	}
+
+	go func() {
+		wg.Wait()
+		close(resultch)
+	}()
+
+	for data := range resultch {
+		repositories.Update(data)
+	}
+
+	fmt.Println("Image uploaded successfully.")
 }

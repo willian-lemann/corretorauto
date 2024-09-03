@@ -6,14 +6,16 @@ import React, { useState, useEffect } from "react";
 type ProgressiveImageProps = React.ComponentProps<typeof NextImage> & {
   src: string;
   fill: boolean;
+  placeholderURL: string;
 };
 
 export const ProgressiveImage = ({
   src,
+  placeholderURL,
   alt,
   ...props
 }: ProgressiveImageProps) => {
-  const [imageSrc, setImageSrc] = useState("/placeholder.png");
+  const [imageSrc, setImageSrc] = useState(placeholderURL);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -28,6 +30,8 @@ export const ProgressiveImage = ({
   return (
     <NextImage
       src={imageSrc as any}
+      placeholder="blur"
+      blurDataURL={placeholderURL}
       alt={alt}
       style={{
         filter: isLoading ? "blur(20px)" : "none",
