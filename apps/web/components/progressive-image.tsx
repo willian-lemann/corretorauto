@@ -3,8 +3,6 @@
 import NextImage from "next/image";
 import React, { useState, useEffect } from "react";
 
-import placeholder from "@/assets/placeholder.png";
-
 type ProgressiveImageProps = React.ComponentProps<typeof NextImage> & {
   src: string;
   fill: boolean;
@@ -15,7 +13,7 @@ export const ProgressiveImage = ({
   alt,
   ...props
 }: ProgressiveImageProps) => {
-  const [imageSrc, setImageSrc] = useState(placeholder);
+  const [imageSrc, setImageSrc] = useState("/placeholder.png");
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
