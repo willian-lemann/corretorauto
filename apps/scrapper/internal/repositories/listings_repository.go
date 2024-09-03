@@ -46,3 +46,23 @@ func SaveOne(listingItem structs.ListingItem) (bool, error) {
 	}
 	return true, nil
 }
+
+func GetListingsImages() []string {
+	client, err := config.SupabaseClient()
+	if err != nil {
+		return nil
+	}
+
+	var images = []string{}
+	var listings = []structs.ListingItem{}
+
+	err = client.DB.From("listings").Select("image").Execute(&listings)
+	if err != nil {
+		return nil
+	}
+
+	for _, listing := range listings {
+		images = append(images, listing.Image)
+	}
+	return images
+}
