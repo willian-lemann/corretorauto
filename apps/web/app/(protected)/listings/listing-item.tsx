@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 
 import { BathIcon, BedIcon, RulerIcon } from "lucide-react";
@@ -14,6 +13,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { ProgressiveImage } from "@/components/progressive-image";
+import { PhotosCarousel } from "./photos-carousel";
 
 type ListingItemProps = {
   isLogged: boolean;
@@ -44,25 +44,10 @@ export async function ListingItem({ listing, isLogged }: ListingItemProps) {
   return (
     <Link href={getListingURL(listing)} key={listing.id}>
       <Card className="w-full max-w-md relative shadow-none overflow-hidden rounded-lg border-none transition-all">
-        <Carousel className="group relative w-full md:max-w-xs">
-          <CarouselPrevious className="absolute  md:hidden md:group-hover:flex left-2 top-1/2 z-[9999]  -translate-y-1/2 rounded-full bg-white/80 p-0 hover:bg-white" />
-          <CarouselContent>
-            {listing.photos.map(({ href }) => (
-              <CarouselItem key={href}>
-                <div className="w-auto h-[300px] relative rounded-lg overflow-hidden">
-                  <ProgressiveImage
-                    src={href!}
-                    placeholderURL={listing.placeholderImage}
-                    alt="Property Image"
-                    fill
-                    className="object-cover rounded-lg"
-                  />
-                </div>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-          <CarouselNext className="absolute md:hidden md:group-hover:flex animate-fadeIn right-2 top-1/2 z-[9999] -translate-y-1/2 rounded-full bg-white/80 p-0 hover:bg-white" />
-        </Carousel>
+        <PhotosCarousel
+          photos={listing.photos}
+          placeholderImage={listing.placeholderImage}
+        />
 
         <div className="py-4 bg-background">
           <div className="flex items-center justify-between mb-2">

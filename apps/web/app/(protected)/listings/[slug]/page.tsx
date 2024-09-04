@@ -19,6 +19,7 @@ import { Share } from "./share";
 import { GoToSite } from "./go-to-side";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
+import { PhotosCarousel } from "../photos-carousel";
 
 type ListingDetailsProps = {
   params: {
@@ -75,7 +76,14 @@ export default async function ListingDetails({ params }: ListingDetailsProps) {
             <Share />
           </div>
 
-          <div className="grid md:grid-cols-2 h-[400px] gap-4">
+          <div className="md:hidden">
+            <PhotosCarousel
+              photos={listing.photos}
+              placeholderImage={listing.placeholderImage}
+            />
+          </div>
+
+          <div className="hidden md:grid md:grid-cols-2 h-[400px] gap-4">
             <div className="relative h-auto rounded-lg overflow-hidden">
               <Image
                 src={listing.image}
@@ -205,7 +213,7 @@ export default async function ListingDetails({ params }: ListingDetailsProps) {
 
       <section id="gallery" className="container px-4 py-8 md:px-8 md:py-12">
         <h2 className="text-2xl font-bold mb-6">Galeria</h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           {listing?.photos?.map((photo: any, index: number) => (
             <div
               key={index}
