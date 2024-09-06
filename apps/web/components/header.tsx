@@ -24,11 +24,13 @@ export async function Header() {
       );
     }
 
-    return (
-      <Link href="/dashboard">
-        <Button variant="ghost">Dashboard</Button>
-      </Link>
-    );
+    return null;
+
+    // return (
+    //   <Link href="/dashboard">
+    //     <Button variant="ghost">Dashboard</Button>
+    //   </Link>
+    // );
   }
 
   return (
