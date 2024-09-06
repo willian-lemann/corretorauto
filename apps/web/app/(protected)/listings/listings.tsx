@@ -10,6 +10,7 @@ import { userAgent } from "next/server";
 import { headers } from "next/headers";
 import { getListings } from "@/data-access/get-listings";
 import { ScrollToTopButton } from "@/components/scroll-top-button";
+import { Label } from "@/components/ui/label";
 
 const pageSize = 12;
 
@@ -41,6 +42,12 @@ export async function Listings({
 
   return (
     <div>
+      <div className="container pb-4">
+        <Label className="text-lg  font-medium">
+          <Label className="font-bold text-lg text-muted-foreground">{listingCount}</Label> Resultados encontrados para esta
+          pesquisa
+        </Label>
+      </div>
       {data?.length === 0 ? (
         <div className="flex flex-col items-center justify-center gap-6 py-16 md:py-24 lg:py-32">
           <div className="flex h-20 w-20 items-center justify-center rounded-full bg-muted">

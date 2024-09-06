@@ -5,14 +5,7 @@ import { Separator } from "@/components/ui/separator";
 import { Card } from "@/components/ui/card";
 import { login } from "@/app/utils/redirects";
 import { createSlug } from "@/lib/utils";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
-import { ProgressiveImage } from "@/components/progressive-image";
+
 import { PhotosCarousel } from "./photos-carousel";
 
 type ListingItemProps = {

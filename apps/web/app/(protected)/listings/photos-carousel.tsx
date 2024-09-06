@@ -6,6 +6,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import Image from "next/image";
 
 type PhotosCarouselProps = {
   photos: { href: string }[];
@@ -23,9 +24,10 @@ export function PhotosCarousel({
         {photos.map(({ href }) => (
           <CarouselItem key={href}>
             <div className="w-auto h-[300px] relative rounded-lg overflow-hidden">
-              <ProgressiveImage
+              <Image
                 src={href!}
-                placeholderURL={placeholderImage}
+                blurDataURL={placeholderImage}
+                placeholder="blur"
                 alt="Property Image"
                 fill
                 className="object-cover rounded-lg"
