@@ -211,9 +211,9 @@ export default async function ListingDetails({ params }: ListingDetailsProps) {
         </div>
       </section>
 
-      <section id="gallery" className="container px-4 py-8 md:px-8 md:py-12">
+      <section id="gallery" className="container px-4 md:px-8">
         <h2 className="text-2xl font-bold mb-6">Galeria</h2>
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 pb-8">
           {listing?.photos?.map((photo: any, index: number) => (
             <div
               key={index}

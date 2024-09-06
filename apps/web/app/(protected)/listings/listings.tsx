@@ -9,7 +9,7 @@ import { SeeMore } from "./see-more";
 import { userAgent } from "next/server";
 import { headers } from "next/headers";
 import { getListings } from "@/data-access/get-listings";
-import { setListingsCount } from "./set-listings-count";
+import { ScrollToTopButton } from "@/components/scroll-top-button";
 
 const pageSize = 12;
 
@@ -76,6 +76,8 @@ export async function Listings({
       ) : null}
 
       {!isLogged ? <SeeMore /> : null}
+
+      <ScrollToTopButton />
     </div>
   );
 }

@@ -18,7 +18,7 @@ export function PhotosCarousel({
 }: PhotosCarouselProps) {
   return (
     <Carousel className="group relative w-full md:max-w-xs">
-      <CarouselPrevious className="absolute  md:group-hover:flex-initial  left-2 top-1/2 z-[9999]  -translate-y-1/2 rounded-full bg-white/80 p-0 hover:bg-white" />
+      <CarouselPrevious className="absolute  md:group-hover:flex-initial  left-2 top-1/2 z-50  -translate-y-1/2 rounded-full bg-white/80 p-0 hover:bg-white" />
       <CarouselContent>
         {photos.map(({ href }) => (
           <CarouselItem key={href}>
@@ -34,7 +34,7 @@ export function PhotosCarousel({
           </CarouselItem>
         ))}
       </CarouselContent>
-      <CarouselNext className="absolute md:hidden md:group-hover:flex animate-fadeIn right-2 top-1/2 z-[9999] -translate-y-1/2 rounded-full bg-white/80 p-0 hover:bg-white" />
+      <CarouselNext className="absolute md:hidden md:group-hover:flex animate-fadeIn right-2 top-1/2 z-50 -translate-y-1/2 rounded-full bg-white/80 p-0 hover:bg-white" />
     </Carousel>
   );
 }

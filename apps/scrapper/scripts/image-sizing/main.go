@@ -65,8 +65,9 @@ func main() {
 
 			var fileName = fmt.Sprintf("%d.png", listing.Id)
 
-			client.Storage.From("images").Upload(fileName, bytes.NewReader(compressedImage))
-			if err != nil {
+			response := client.Storage.From("images").Upload(fileName, bytes.NewReader(compressedImage))
+
+			if response.Key == "" {
 				fmt.Println("Failed to upload image:", err)
 				return
 			}
