@@ -88,9 +88,7 @@ export function Search() {
       if (scrollPercentage >= 2) {
         setIsFloating(true);
       } else {
-        if (scrollPercentage === 0) {
-          setIsFloating(false);
-        }
+        setIsFloating(false);
       }
     }
 
@@ -105,7 +103,7 @@ export function Search() {
     return (
       <div
         data-floating={isFloating}
-        className="-translate-y-[200px] md:-translate-y-[100px] data-[floating=true]:-translate-y-0 fixed z-[9999] flex transition-all md:max-w-4xl top-0  shadow-md md:top-2 left-1/2 -translate-x-1/2 py-6 md:rounded-3xl  md:mx-auto md:flex-row flex-col md:items-center justify-end px-4 md:container w-full gap-2 bg-background"
+        className="-translate-y-[200px] md:-translate-y-[100px] data-[floating=true]:-translate-y-0 fixed z-[9999] flex transition-all duration-200 md:max-w-4xl top-0  shadow-md md:top-2 left-1/2 -translate-x-1/2 py-6 md:rounded-3xl  md:mx-auto md:flex-row flex-col md:items-center justify-end px-4 md:container w-full gap-2 bg-background"
       >
         <div className="relative flex-1 max-w-lg flex">
           <SearchIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
@@ -250,10 +248,7 @@ export function Search() {
     <>
       {renderFloatingSearch()}
 
-      <div
-        data-floating={isFloating}
-        className="data-[floating=true]:invisible transition-all flex md:flex-row flex-col md:items-center justify-end px-4 md:container w-full gap-2 bg-background rounded-lg "
-      >
+      <div className="transition-all flex md:flex-row flex-col md:items-center justify-end px-4 md:container w-full gap-2 bg-background rounded-lg ">
         <div className="relative flex-1 max-w-lg flex">
           <SearchIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
           <Input
