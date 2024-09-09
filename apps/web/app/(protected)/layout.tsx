@@ -1,11 +1,7 @@
 import { Header } from "@/components/header";
+import { PropsWithChildren } from "react";
 
-type LayoutProps = {
-  children: React.ReactNode;
-  login: React.ReactNode & { props: { parallelRouterKey: string } };
-};
-
-export default async function ProtectedLayout({ children }: LayoutProps) {
+export default async function ProtectedLayout({ children }: PropsWithChildren) {
   return (
     <>
       <Header />
