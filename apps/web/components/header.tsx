@@ -47,13 +47,11 @@ export async function Header() {
           {isAuthenticated ? (
             <UserButton />
           ) : (
-            <Link
-              href={login}
-              className="text-sm font-medium hover:underline"
-              prefetch={false}
-            >
-              Login
-            </Link>
+            <Button asChild className="h-auto px-5 ">
+              <Link href={login} className="text-sm font-bold" prefetch={false}>
+                Login
+              </Link>
+            </Button>
           )}
         </div>
       </div>

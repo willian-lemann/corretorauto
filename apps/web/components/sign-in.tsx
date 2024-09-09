@@ -1,3 +1,4 @@
+import { isMobile } from "@/app/utils/check-responsive";
 import { SignIn as SigninComponent } from "@clerk/nextjs";
 
 export function SignIn() {
@@ -12,12 +13,13 @@ export function SignIn() {
           },
 
           rootBox: {
-            width: "100%",
+            width: isMobile() ? "auto" : "100%",
             border: "none",
             boxShadow: "none",
+            background: "#fff",
           },
           cardBox: {
-            width: "100%",
+            width: isMobile() ? "" : "100%",
             border: "none",
             boxShadow: "none",
           },
