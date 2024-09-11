@@ -20,6 +20,8 @@ import { GoToSite } from "./go-to-side";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { PhotosCarousel } from "../photos-carousel";
+import { Gallery } from "./gallery";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 
 type ListingDetailsProps = {
   params: {
@@ -36,7 +38,6 @@ export async function generateMetadata(
 
   const previousImages = (await parent).openGraph?.images || [];
 
-  console.log(listing);
   return {
     title: `${createSlug(listing.address)}-${listing.id}`,
     openGraph: {
@@ -85,29 +86,63 @@ export default async function ListingDetails({ params }: ListingDetailsProps) {
           </div>
 
           <div className="hidden md:grid md:grid-cols-2 h-[400px] gap-4">
-            <div className="relative h-auto rounded-lg overflow-hidden">
-              <Image
-                src={listing.image}
-                fill
-                className="object-cover"
-                alt="Main property image"
-              />
-            </div>
+            <Dialog>
+              <DialogTrigger asChild>
+                <div className="relative h-auto rounded-lg overflow-hidden">
+                  <Image
+                    src={listing.image}
+                    fill
+                    className="object-cover"
+                    alt="Main property image"
+                  />
+                </div>
+              </DialogTrigger>
+
+              <DialogContent className="h-full max-w-3xl bg-transparent outline-none shadow-none border-none">
+                <div className="relative h-auto rounded-lg overflow-hidden">
+                  <Image
+                    src={listing.image}
+                    fill
+                    className="object-cover"
+                    alt="Main property image"
+                  />
+                </div>
+              </DialogContent>
+            </Dialog>
+
             <div className="grid grid-cols-2 gap-4 relative">
               {listing.photos
                 .slice(0, 4)
                 .map((photo: { href: string; listingItemId: string }) => (
-                  <div
-                    key={photo.listingItemId}
-                    className="relative h-auto w-full rounded-lg overflow-hidden"
-                  >
-                    <Image
-                      src={photo.href}
-                      fill
-                      className="object-cover"
-                      alt={`Imagem do imovel ${photo.listingItemId}`}
-                    />
-                  </div>
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <div
+                        key={photo.listingItemId}
+                        className="relative h-auto w-full rounded-lg overflow-hidden"
+                      >
+                        <Image
+                          src={photo.href}
+                          fill
+                          className="object-cover"
+                          alt={`Imagem do imovel ${photo.listingItemId}`}
+                        />
+                      </div>
+                    </DialogTrigger>
+
+                    <DialogContent className="h-full max-w-3xl bg-transparent outline-none shadow-none border-none">
+                      <div
+                        key={photo.listingItemId}
+                        className="relative h-auto w-full rounded-lg overflow-hidden"
+                      >
+                        <Image
+                          src={photo.href}
+                          fill
+                          className="object-cover"
+                          alt={`Imagem do imovel ${photo.listingItemId}`}
+                        />
+                      </div>
+                    </DialogContent>
+                  </Dialog>
                 ))}
 
               <Link
@@ -212,24 +247,7 @@ export default async function ListingDetails({ params }: ListingDetailsProps) {
         </div>
       </section>
 
-      <section id="gallery" className="container px-4 md:px-8">
-        <h2 className="text-2xl font-bold mb-6">Galeria</h2>
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 pb-8">
-          {listing?.photos?.map((photo: any, index: number) => (
-            <div
-              key={index}
-              className="relative aspect-square rounded-lg overflow-hidden"
-            >
-              <Image
-                src={photo.href}
-                layout="fill"
-                objectFit="cover"
-                alt={`Property image ${index + 1}`}
-              />
-            </div>
-          ))}
-        </div>
-      </section>
+      <Gallery photos={listing.photos.map((photo: any) => photo.href)} />
     </div>
   );
 }
