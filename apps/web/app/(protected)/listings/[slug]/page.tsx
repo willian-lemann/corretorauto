@@ -36,10 +36,11 @@ export async function generateMetadata(
 
   const previousImages = (await parent).openGraph?.images || [];
 
+  console.log(listing);
   return {
-    title: `${listing.id}-${createSlug(listing.address)}`,
+    title: `${createSlug(listing.address)}-${listing.id}`,
     openGraph: {
-      images: [listing.image, ...previousImages],
+      images: [...previousImages, listing.image],
     },
   };
 }

@@ -34,7 +34,6 @@ export function CheckAgentForm() {
     }
   }, [state?.error, isPending]);
 
-  console.log("error", state?.error);
   return (
     <DialogContent asChild>
       <form className="overflow-hidden" action={action}>

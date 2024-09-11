@@ -9,7 +9,6 @@ export async function getUser({ id: userId }: { id: string }) {
     .eq("userAuthId", userId)
     .single()
     .then((res) => {
-      console.log(res);
       const { agents, ...restUser } = res.data;
       const [agent] = agents;
       return {

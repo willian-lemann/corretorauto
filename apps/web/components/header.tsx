@@ -38,7 +38,7 @@ export async function Header() {
       <div className="container py-3 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2" prefetch={false}>
           <MountainIcon className="w-6 h-6" />
-          <span className="font-bold text-lg">ImovelFacil</span>
+          <span className="font-bold text-lg">Imovelist</span>
         </Link>
 
         <div className="flex items-center gap-4">
