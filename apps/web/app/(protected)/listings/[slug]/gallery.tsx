@@ -1,4 +1,10 @@
-import { Dialog, DialogTrigger, DialogContent } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogClose,
+} from "@/components/ui/dialog";
+import { XIcon } from "lucide-react";
 import Image from "next/image";
 
 type GalleryProps = {
@@ -26,6 +32,9 @@ export function Gallery({ photos }: GalleryProps) {
               </DialogTrigger>
 
               <DialogContent className="h-full max-w-3xl bg-transparent outline-none shadow-none border-none">
+                <DialogClose className="bg-white h-fit w-fit z-50 ml-auto">
+                  <XIcon />
+                </DialogClose>
                 <Image
                   src={photo}
                   fill
