@@ -32,7 +32,7 @@ export function Gallery({ photos }: GalleryProps) {
               </DialogTrigger>
 
               <DialogContent className="h-full max-w-3xl bg-transparent outline-none shadow-none border-none">
-                <DialogClose className="bg-white h-fit w-fit z-50 ml-auto">
+                <DialogClose className="bg-white rounded h-fit w-fit z-50 ml-auto">
                   <XIcon />
                 </DialogClose>
                 <Image

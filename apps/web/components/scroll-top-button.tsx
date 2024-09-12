@@ -30,7 +30,7 @@ export function ScrollToTopButton() {
     <>
       {showButton && (
         <button
-          className="fixed bottom-4 right-4 p-2 rounded-full bg-primary shadow-md text-white"
+          className="fixed bottom-4 right-4 p-2 rounded-full z-[9999] bg-primary shadow-md text-white"
           onClick={handleButtonClick}
         >
           <ArrowUp size={32} />

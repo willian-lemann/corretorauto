@@ -35,7 +35,8 @@ export function Search() {
   const [search, setSearch] = useState(params.get("q") || "");
   const [isFloating, setIsFloating] = useState(false);
 
-  const hasFilters = params.has("filter") || params.has("type");
+  const hasFilters =
+    params.has("filter") || params.has("type") || params.has("q");
 
   function handleSearch() {
     if (search) {
@@ -74,6 +75,12 @@ export function Search() {
     setSearch("");
   }
 
+  function clearQueryFilter() {
+    params.delete("q");
+    replace(`${pathname}?${params.toString()}`);
+    setSearch("");
+  }
+
   useEffect(() => {
     function handleScroll() {
       const scrollPosition =
@@ -96,6 +103,22 @@ export function Search() {
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  useEffect(() => {
+    document.addEventListener("input", (e: any) => {
+      if (!e.inputType) {
+        clearQueryFilter();
+      }
+    });
+
+    return () => {
+      document.removeEventListener("input", (e: any) => {
+        if (!e.inputType) {
+          clearQueryFilter();
+        }
+      });
     };
   }, []);
 
