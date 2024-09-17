@@ -167,6 +167,8 @@ func insidePageScrape(listing structs.ListingItem) structs.ListingItem {
 }
 
 func scrapeWorker(link string, ch chan structs.ListingItem, w *sync.WaitGroup) {
+	defer w.Done()
+
 	listings := initScrape(link)
 
 	for _, listing := range listings {
@@ -177,8 +179,6 @@ func scrapeWorker(link string, ch chan structs.ListingItem, w *sync.WaitGroup) {
 		newListing.Image = newListing.Photos[0].Href
 		ch <- newListing
 	}
-
-	w.Done()
 }
 
 func ExecuteAuxPredial(wg *sync.WaitGroup) {
@@ -188,7 +188,7 @@ func ExecuteAuxPredial(wg *sync.WaitGroup) {
 
 	links := getNavLinks()
 
-	resultch := make(chan structs.ListingItem, 2)
+	resultch := make(chan structs.ListingItem)
 
 	var w sync.WaitGroup
 

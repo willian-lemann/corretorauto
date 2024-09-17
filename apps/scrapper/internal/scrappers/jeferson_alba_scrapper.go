@@ -67,43 +67,23 @@ func getListingItems(linkToVisit string) []structs.ListingItem {
 			}
 		})
 
-		if len(listings) > 0 {
-			for _, listing := range listings {
-				if listing.Id != id {
-					listings = append(listings, structs.ListingItem{
-						Id:        id,
-						Link:      link,
-						Image:     image,
-						Address:   address,
-						Price:     price,
-						Area:      area,
-						Bedrooms:  bedrooms,
-						Bathrooms: bathrooms,
-						Type:      listingType,
-						ForSale:   forSale,
-						Parking:   parking,
-						Ref:       ref,
-						Agency:    "jeferson_alba",
-					})
-				}
-			}
-		} else {
-			listings = append(listings, structs.ListingItem{
-				Id:        id,
-				Link:      link,
-				Image:     image,
-				Address:   address,
-				Price:     price,
-				Area:      area,
-				Bedrooms:  bedrooms,
-				Bathrooms: bathrooms,
-				Type:      listingType,
-				ForSale:   forSale,
-				Parking:   parking,
-				Ref:       ref,
-				Agency:    "jeferson_alba",
-			})
+		listing := structs.ListingItem{
+			Id:        id,
+			Link:      link,
+			Image:     image,
+			Address:   address,
+			Price:     price,
+			Area:      area,
+			Bedrooms:  bedrooms,
+			Bathrooms: bathrooms,
+			Type:      listingType,
+			ForSale:   forSale,
+			Parking:   parking,
+			Ref:       ref,
+			Agency:    "jeferson_alba",
 		}
+
+		listings = append(listings, listing)
 	})
 
 	c.Visit(linkToVisit)
@@ -158,7 +138,6 @@ func worker(link string, ch chan structs.ListingItem, w *sync.WaitGroup) {
 		}
 		ch <- newListing
 	}
-
 }
 
 func ExecuteJefersonAlba(wg *sync.WaitGroup) {
@@ -167,7 +146,7 @@ func ExecuteJefersonAlba(wg *sync.WaitGroup) {
 
 	links := getLinks()
 
-	resultch := make(chan structs.ListingItem, 3)
+	resultch := make(chan structs.ListingItem)
 
 	var w sync.WaitGroup
 
@@ -188,6 +167,5 @@ func ExecuteJefersonAlba(wg *sync.WaitGroup) {
 		}
 	}
 
-	fmt.Printf("Finished scrapping jeferson_alba")
-
+	fmt.Println("Finished scrapping jeferson_alba")
 }
