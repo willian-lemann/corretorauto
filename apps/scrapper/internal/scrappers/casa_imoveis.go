@@ -133,13 +133,6 @@ func scrapePageInside(listing structs.ListingItem, ch chan structs.ListingItem, 
 	ch <- listing
 }
 
-func SaveListing(listingItem structs.ListingItem) {
-	_, err := usecases.ExecuteOne(listingItem)
-	if err != nil {
-		fmt.Println("Cannot save listings from casa_imoveis", err)
-	}
-}
-
 func CasaImoveisExecute(wg *sync.WaitGroup) {
 	defer wg.Done()
 
@@ -163,7 +156,10 @@ func CasaImoveisExecute(wg *sync.WaitGroup) {
 	}()
 
 	for listing := range listingsChannel {
-		SaveListing(listing)
+		_, err := usecases.SaveListing(listing)
+		if err != nil {
+			continue
+		}
 	}
 
 	fmt.Println("Finished scrapping casa_imoveis")

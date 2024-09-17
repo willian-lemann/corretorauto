@@ -21,11 +21,11 @@ export const getListings = cache(
       .range(offset, offset + pageSize - 1);
 
     if (type) {
-      queryRaw = queryRaw.eq("type", type);
+      queryRaw = queryRaw.eq("type", type.charAt(0).toUpperCase() + type.slice(1));
     }
 
     if (filter) {
-      queryRaw = queryRaw.or(`forSale.eq.${filter !== "Aluguel"}`);
+      queryRaw = queryRaw.or(`forSale.eq.${filter !== "aluguel"}`);
     }
 
     if (query) {

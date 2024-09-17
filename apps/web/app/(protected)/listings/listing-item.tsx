@@ -36,7 +36,7 @@ export async function ListingItem({ listing, isLogged }: ListingItemProps) {
 
   return (
     <Link href={getListingURL(listing)} key={listing.id}>
-      <Card className="w-full max-w-md relative shadow-none overflow-hidden rounded-lg border-none transition-all">
+      <Card className="w-full max-w-md animate-fadeIn relative shadow-none overflow-hidden rounded-lg border-none transition-all">
         <PhotosCarousel
           photos={listing.photos}
           placeholderImage={listing.placeholderImage}

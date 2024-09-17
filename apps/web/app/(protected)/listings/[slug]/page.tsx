@@ -167,7 +167,7 @@ export default async function ListingDetails({ params }: ListingDetailsProps) {
               <h2 className="text-xl font-semibold mb-4">
                 Entire place in {listing.address}
               </h2>
-              <div className="flex gap-4 text-sm text-muted-foreground mb-4">
+              {/* <div className="flex gap-4 text-sm text-muted-foreground mb-4">
                 <span>
                   {listing.bedrooms} bedroom{listing.bedrooms > 1 ? "s" : ""}
                 </span>
@@ -181,16 +181,16 @@ export default async function ListingDetails({ params }: ListingDetailsProps) {
                     <span>{listing.area}</span>
                   </>
                 )}
-              </div>
+              </div> */}
 
               <div className="border-t border-b py-6 my-6">
                 <div className="grid gap-4">
                   <div className="flex items-center gap-4">
                     <BedIcon className="w-6 h-6" />
                     <div>
-                      <h3 className="font-semibold">Bedrooms</h3>
+                      <h3 className="font-semibold">Quartos</h3>
                       <p className="text-sm text-muted-foreground">
-                        {listing.bedrooms} bedroom
+                        {listing.bedrooms} quarto
                         {listing.bedrooms > 1 ? "s" : ""}
                       </p>
                     </div>
@@ -198,9 +198,9 @@ export default async function ListingDetails({ params }: ListingDetailsProps) {
                   <div className="flex items-center gap-4">
                     <BathIcon className="w-6 h-6" />
                     <div>
-                      <h3 className="font-semibold">Bathrooms</h3>
+                      <h3 className="font-semibold">Banheiros</h3>
                       <p className="text-sm text-muted-foreground">
-                        {listing.bathrooms} bathroom
+                        {listing.bathrooms} banheiro
                         {listing.bathrooms > 1 ? "s" : ""}
                       </p>
                     </div>

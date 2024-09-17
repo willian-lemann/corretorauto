@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/url"
 	"scrapper/internal/structs"
+	"scrapper/internal/usecases"
 	"scrapper/utils"
 	"strconv"
 	"strings"
@@ -202,7 +203,10 @@ func ExecuteAuxPredial(wg *sync.WaitGroup) {
 	}()
 
 	for listing := range resultch {
-		SaveListing(listing)
+		_, err := usecases.SaveListing(listing)
+		if err != nil {
+			continue
+		}
 	}
 
 	fmt.Println("Finished scrapping aux_predial")

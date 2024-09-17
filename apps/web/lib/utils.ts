@@ -33,3 +33,8 @@ export function extractIdFromSlug(url: string) {
   const id = slug.split("-")[0]!;
   return +id;
 }
+
+export function Capitalize(value: string | null) {
+  if (!value) return;
+  return value.charAt(0).toUpperCase() + value.slice(1);
+}

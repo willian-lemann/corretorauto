@@ -34,7 +34,7 @@ func Save(scrappedListings []structs.ListingItem) (bool, error) {
 	return true, nil
 }
 
-func SaveOne(listingItem structs.ListingItem) (bool, error) {
+func SaveOne(listingItem *structs.ListingItem) (bool, error) {
 	client, err := config.SupabaseClient()
 	if err != nil {
 		return false, err
@@ -79,6 +79,19 @@ func Update(data structs.ListingItem) (bool, error) {
 	err = client.DB.From("listings").Update(data).Eq("id", strconv.Itoa(data.Id)).Execute(&listings)
 	if err != nil {
 		return false, nil
+	}
+
+	return true, nil
+}
+
+func Delete(id int) (bool, error) {
+	client, err := config.SupabaseClient()
+
+	var results []structs.ListingItem
+
+	err = client.DB.From("listings").Delete().Eq("id", strconv.Itoa(id)).Execute(&results)
+	if err != nil {
+		return false, err
 	}
 
 	return true, nil

@@ -23,3 +23,24 @@ type Photos struct {
 	ListingItemId int    `json:"listingItemId"`
 	Href          string `json:"href"`
 }
+
+func NewListingItem(listing ListingItem) *ListingItem {
+	return &ListingItem{
+		Id:               listing.Id,
+		Link:             listing.Link,
+		Image:            listing.Image,
+		Address:          listing.Address,
+		Price:            listing.Price,
+		Area:             listing.Area,
+		Bedrooms:         listing.Bedrooms,
+		Bathrooms:        listing.Bathrooms,
+		Type:             listing.Type,
+		ForSale:          listing.ForSale,
+		Parking:          listing.Parking,
+		Content:          listing.Content,
+		Photos:           listing.Photos,
+		Agency:           listing.Agency,
+		PlaceholderImage: listing.PlaceholderImage,
+		Ref:              listing.Ref,
+	}
+}

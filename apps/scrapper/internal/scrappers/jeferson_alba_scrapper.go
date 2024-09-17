@@ -4,11 +4,11 @@ import (
 	"fmt"
 	"log"
 	"scrapper/internal/structs"
+	"scrapper/internal/usecases"
 	"scrapper/utils"
 	"strconv"
 	"strings"
 	"sync"
-	"time"
 
 	"github.com/gocolly/colly"
 )
@@ -147,6 +147,8 @@ func getListingItem(listing structs.ListingItem) structs.ListingItem {
 }
 
 func worker(link string, ch chan structs.ListingItem, w *sync.WaitGroup) {
+	defer w.Done()
+
 	listings := getListingItems(link)
 
 	for _, listing := range listings {
@@ -157,13 +159,11 @@ func worker(link string, ch chan structs.ListingItem, w *sync.WaitGroup) {
 		ch <- newListing
 	}
 
-	w.Done()
 }
 
 func ExecuteJefersonAlba(wg *sync.WaitGroup) {
 	defer wg.Done()
 	fmt.Println("Starting scrapping jeferson_alba...")
-	start := time.Now()
 
 	links := getLinks()
 
@@ -182,10 +182,12 @@ func ExecuteJefersonAlba(wg *sync.WaitGroup) {
 	}()
 
 	for listing := range resultch {
-		SaveListing(listing)
+		_, err := usecases.SaveListing(listing)
+		if err != nil {
+			continue
+		}
 	}
 
-	elapsed := time.Since(start)
-	fmt.Printf("Finished scrapping jeferson_alba in %f", elapsed.Seconds())
+	fmt.Printf("Finished scrapping jeferson_alba")
 
 }
