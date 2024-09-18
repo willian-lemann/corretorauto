@@ -1,4 +1,4 @@
-package main
+package scripts
 
 import (
 	"fmt"
@@ -9,7 +9,7 @@ import (
 	"github.com/gocolly/colly"
 )
 
-func checkCasaImoveis() {
+func CleanerJefersonAlba() {
 	c := colly.NewCollector()
 
 	listings, err := usecases.GetListings("casa_imoveis")
@@ -23,6 +23,8 @@ func checkCasaImoveis() {
 	for _, listing := range listings {
 		wg.Add(1)
 		go func(id int, ref string) {
+			defer wg.Done()
+
 			c.OnHTML("section.internatitle div.internatitle__container.container h1 p", func(e *colly.HTMLElement) {
 				notAvailable := e.ChildText("b") == "0"
 				if notAvailable {
@@ -33,16 +35,9 @@ func checkCasaImoveis() {
 					}
 				}
 			})
-
 			c.Visit(fmt.Sprintf("https://www.casaimoveisimb.com.br/imovel/?finalidade=on&ref=%s", strings.Replace(ref, "#", "", -1)))
-			wg.Done()
 		}(listing.Id, listing.Ref)
 	}
 
 	wg.Wait()
-
-}
-
-func main() {
-	checkCasaImoveis()
 }
