@@ -18,6 +18,7 @@ func CleanerCasaImoveis() {
 		return
 	}
 
+	// testing
 	var w sync.WaitGroup
 
 	for _, listing := range listings {
