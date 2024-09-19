@@ -18,7 +18,7 @@ func CleanerCasaImoveis() {
 		return
 	}
 
-	// testing
+	// testing git
 	var w sync.WaitGroup
 
 	for _, listing := range listings {
