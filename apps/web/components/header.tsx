@@ -17,21 +17,24 @@ export async function Header() {
     }
 
     if (user.role !== "agent") {
-      return null;
-      // return (
-      //   <AgentModal>
-      //     <Button variant="ghost">Sou corretor</Button>
-      //   </AgentModal>
-      // );
+      return (
+        <AgentModal>
+          <Button variant="ghost">Sou corretor</Button>
+        </AgentModal>
+      );
     }
 
-    return null;
+    return (
+      <>
+        {/* <Link href="/anunciar">
+          <Button variant="secondary">Anunciar</Button>
+        </Link> */}
 
-    // return (
-    //   <Link href="/dashboard">
-    //     <Button variant="ghost">Dashboard</Button>
-    //   </Link>
-    // );
+        {/* <Link href="/anunciar">
+          <Button variant="ghost">Anunciar</Button>
+        </Link> */}
+      </>
+    );
   }
 
   return (
