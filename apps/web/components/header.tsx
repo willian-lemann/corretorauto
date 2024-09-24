@@ -17,11 +17,12 @@ export async function Header() {
     }
 
     if (user.role !== "agent") {
-      return (
-        <AgentModal>
-          <Button variant="ghost">Sou corretor</Button>
-        </AgentModal>
-      );
+      return null;
+      // return (
+      //   <AgentModal>
+      //     <Button variant="ghost">Sou corretor</Button>
+      //   </AgentModal>
+      // );
     }
 
     return null;
