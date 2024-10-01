@@ -25,7 +25,7 @@ export default function Loading() {
           ))}
         </div>
       </div>
-      {/* TODO */}
+  
       <div className="flex justify-between items-center mb-8">
         <div>
           <Skeleton className="h-6 w-32 mb-2" />
