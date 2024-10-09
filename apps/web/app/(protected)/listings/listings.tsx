@@ -8,9 +8,11 @@ import { List } from "lucide-react";
 import { SeeMore } from "./see-more";
 import { userAgent } from "next/server";
 import { headers } from "next/headers";
-import { getListings } from "@/data-access/get-listings";
+import { getListings } from "@/data-access/listings/get-listings";
 import { ScrollToTopButton } from "@/components/scroll-top-button";
 import { Label } from "@/components/ui/label";
+import { getUser } from "@/data-access/user/get-user";
+import { getListingsFromAgent } from "@/data-access/listings/get-listings-from-agent";
 
 const pageSize = 12;
 
@@ -33,9 +35,25 @@ export async function Listings({
 
   const { filter, type } = filters;
 
-  const { data, count: listingCount } = isLogged
-    ? await getListings({ page: +page, filter, query: q, type })
-    : await getListingsLimited();
+  async function fetchListings() {
+    if (isLogged) {
+      const user = await getUser({ id: userId! });
+      if (user.agent) {
+        return await getListingsFromAgent({
+          page: +page,
+          filter,
+          query: q,
+          type,
+          agentId: user.agent.id,
+        });
+      }
+      return await getListings({ page: +page, filter, query: q, type });
+    }
+
+    return await getListingsLimited();
+  }
+
+  const { data, count: listingCount } = await fetchListings();
 
   const numberOfPages = Math.ceil(Number(listingCount) / pageSize);
   const shouldShowPagination = isLogged && data?.length! > 0;
